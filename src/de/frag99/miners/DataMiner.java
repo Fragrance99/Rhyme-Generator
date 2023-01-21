@@ -124,7 +124,7 @@ public class DataMiner {
 	}
 	
 	public static ArrayList<String> findDoubleRhymesTo(Word w) {
-		ArrayList<String> classicRhymes = new ArrayList<>();
+		ArrayList<String> doubleRhymes = new ArrayList<>();
 		
 		//<normales Wort>,<Wort in Lautschrift>,... e.g. user vorgeschlagen
 		FileInputStream inputStream = null;
@@ -142,11 +142,11 @@ public class DataMiner {
 				
 				Word tempW = new Word();
 				tempW = tempT.tokenize();
-				if(w.classicRhymesWith(tempW)) {
-					
-					classicRhymes.add(data.get(0));
-				}
-					
+				if(w.vowelRhymesWith(tempW)) {
+					if(w.classicRhymesWith(tempW)) {
+						doubleRhymes.add(data.get(0));
+					}
+				}					
 			}			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -154,7 +154,7 @@ public class DataMiner {
 		}	
 
 		//also rhymes with itself
-		return classicRhymes;
+		return doubleRhymes;
 	}
 	
 	public static void parseXML() throws ParserConfigurationException, SAXException, IOException {

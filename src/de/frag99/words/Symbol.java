@@ -14,7 +14,12 @@ public class Symbol {
 		this.symb = symb;
 	}
 	
-	
+	public boolean rhymesWith(Symbol s) {
+		if(this.symb.equals(s.symb)) {
+			return true;
+		}
+		return false;
+	}
 
 	public Token getOrigToken() {
 		return origToken;

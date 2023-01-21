@@ -1,16 +1,10 @@
 package de.frag99.machine;
 
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import de.frag99.miners.DataMiner;
 import de.frag99.words.Word;
 
 public class DoubleRhyme {
-
+	
 	public static void main(String[] args) {
 		//args[0] : Eingabewort
 		//args[1] : wert für doppelreim(0), vokalreim(1), standard reim(2)
@@ -27,10 +21,10 @@ public class DoubleRhyme {
 //		
 //		System.out.println(System.currentTimeMillis() - startTime);
 		
-		args[0] = "norm";						//<----------USER EINGABE
+		args[0] = "Krankenhaus";						//<----------USER EINGABE
 		args[1] = "classic";
 		args[2] = "de";
-		
+
 		
 		long startTime = System.currentTimeMillis();
 		int i = 0;
@@ -42,6 +36,8 @@ public class DoubleRhyme {
 			if(userWord.toString().isBlank()) {
 				System.out.println("Wort nicht gefunden");
 			}else {
+				
+				
 				
 				switch (args[1]) {
 				case "double":

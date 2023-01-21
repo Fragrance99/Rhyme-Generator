@@ -57,7 +57,9 @@ public class Tokenizer {
 		Word wordIPA = new Word();
 		ArrayList<Token> tokens = new ArrayList<>();
 		ArrayList<String> symbols = new ArrayList<>();
+		
 		while(!exhausted) {
+			
 			tokens.add(token);
 			symbols.add(rawSymbol);
 			moveAhead();

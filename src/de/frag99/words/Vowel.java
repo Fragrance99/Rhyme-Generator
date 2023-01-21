@@ -15,16 +15,19 @@ public class Vowel extends Symbol{
 		this.position = pos;
 	}
 	
-	public boolean rhymesWith(Vowel v) {
+	public boolean rhymesWith(Symbol v) {
 		//now: check if symbols are identical, later: check if in same RhymeClass
-		if(this.origToken.equals(v.getOrigToken()) && this.position == v.getPosition()) {
+		if(this.origToken.equals(v.getOrigToken()) && this.position == ((Vowel) v).getPosition()) {
 			return true;
 		}
 		return false;
 	}
 	
+	
 	public int getPosition() {
 		return position;
 	}
+	
+
 	
 }

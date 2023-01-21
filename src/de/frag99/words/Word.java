@@ -22,10 +22,10 @@ public class Word {
 		int vowelPosition = 0;
 		int symbolIndex = 0;
 		for(Token t : tokens) {
+			
 			switch (t.type) {
 			case VOWEL:
 				symbols.add(new Vowel(t, vowelPosition, rawSymbols.get(symbolIndex)));
-				
 				vowelPosition++;
 				break;			
 			case CONSONANT:
@@ -84,13 +84,13 @@ public class Word {
 		
 	}
 	
-	private ArrayList<String> getLastSyll(){
-		ArrayList<String> lastSyllable = new ArrayList<>();
+	private ArrayList<Symbol> getLastSyll(){
+		ArrayList<Symbol> lastSyllable = new ArrayList<>();
 		
 		int i = getIndexOfLastVowel();
 		if(i>0) {
 			while(i<symbols.size()) {
-				lastSyllable.add(symbols.get(i).getSymb());
+				lastSyllable.add(symbols.get(i));
 				//immernoch in lautschrift
 				i++;
 			}
@@ -100,14 +100,14 @@ public class Word {
 	}
 	
 	public boolean classicRhymesWith(Word w2) {
-		ArrayList<String> lastSyllable1 = this.getLastSyll();
-		ArrayList<String> lastSyllable2 = w2.getLastSyll();
+		ArrayList<Symbol> lastSyllable1 = this.getLastSyll();
+		ArrayList<Symbol> lastSyllable2 = w2.getLastSyll();
 		
 		if(!lastSyllable1.isEmpty()) {
 			if(lastSyllable1.size() == lastSyllable2.size()) {
 				for(int i = 0; i<lastSyllable1.size(); i++) {
-					if(!lastSyllable1.get(i).equals(lastSyllable2.get(i))) {
-						
+					if(!lastSyllable1.get(i).rhymesWith(lastSyllable2.get(i))) {
+						//TODO 
 						return false;
 					}
 					

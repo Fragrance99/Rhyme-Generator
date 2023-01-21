@@ -1,0 +1,1 @@
+With this application you can find classic rhymes, double rhymes and vowel rhymes with respect to a given word.
