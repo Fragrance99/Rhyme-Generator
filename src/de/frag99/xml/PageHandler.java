@@ -59,9 +59,21 @@ public class PageHandler extends DefaultHandler{
 					Pattern pattern = Pattern.compile("\\{\\{Lautschrift\\|(.*?)\\}\\}");
 					Matcher matcher = pattern.matcher(content);
 						if(matcher.find()) {
-							if(!matcher.group(1).isBlank() && !matcher.group(1).equals("…")) {
-								System.out.println(currWord+";"+matcher.group(1));
-								addLineTo(currWord+";"+matcher.group(1)+System.lineSeparator(), outputFile);
+							if(!matcher.group(1).isBlank()
+									//Ausnahmen wegen inkonsistenter Datenaufteilung
+									&& !matcher.group(1).contains("…")
+									&& !matcher.group(1).contains("=")
+									&& !matcher.group(1).contains("...")
+									&& !matcher.group(1).contains("/")
+									&& !matcher.group(1).contains(";")) {
+								if(!currWord.contains(":")) {
+									//DEBUG System.out.println(currWord+";"+matcher.group(1));
+									//<WORT>;<LAUTSCHRIFT>;<SOURCE = WIKT|USER>
+									addLineTo(currWord+";"+matcher.group(1)+
+											/* ";"+"WIKT"+ */
+											System.lineSeparator() ,outputFile);
+								}
+								
 							}
 							
 							
