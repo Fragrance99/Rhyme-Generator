@@ -9,7 +9,7 @@ public class Tokenizer {
 	private StringBuilder input = new StringBuilder();
 	private Token token;
 	private boolean exhausted = false;
-	private String rawSymbols;
+	private String rawSymbol;
 	
 	public Tokenizer(String rawInput) {
 		
@@ -43,7 +43,7 @@ public class Tokenizer {
 			
 			if(end!=-1) {
 				token = t;
-				rawSymbols = input.substring(0, end);
+				rawSymbol = input.substring(0, end);
 				input.delete(0, end);
 				return true;			
 			}
@@ -56,11 +56,13 @@ public class Tokenizer {
 		
 		Word wordIPA = new Word();
 		ArrayList<Token> tokens = new ArrayList<>();
+		ArrayList<String> symbols = new ArrayList<>();
 		while(!exhausted) {
 			tokens.add(token);
+			symbols.add(rawSymbol);
 			moveAhead();
 		}
-		wordIPA.setSymbols(tokens);
+		wordIPA.setSymbols(tokens, symbols);
 		return wordIPA;
 	}
 	

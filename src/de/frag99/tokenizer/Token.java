@@ -69,20 +69,15 @@ public enum Token {
 	
 	
 	public final Pattern pattern;
-	public final int[] symbolID;
+	public final String symbol;
 	//symbol in int representation
 	
 	
 	public final TokenType type;
 	
 	Token(String regex, TokenType type){
-		pattern = Pattern.compile("^" + regex);
-		
-		symbolID = new int[regex.toCharArray().length];
-		for(int i = 0; i<regex.toCharArray().length; i++) {
-			symbolID[i] = regex.toCharArray()[i];
-		}
-		
+		this.pattern = Pattern.compile("^" + regex);		
+		this.symbol = regex;
 		this.type = type;
 	}
 	

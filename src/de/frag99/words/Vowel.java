@@ -10,8 +10,8 @@ public class Vowel extends Symbol{
 	
 	
 
-	public Vowel(Token token, int pos) {
-		super(token);
+	public Vowel(Token token, int pos, String symb) {
+		super(token, symb);
 		this.position = pos;
 	}
 	

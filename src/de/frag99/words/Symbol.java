@@ -5,13 +5,13 @@ import de.frag99.tokenizer.Token;
 public class Symbol {
 
 	//A symbol consists of multiple int combinations
-	public int[] decIDs;
+	public String symb;
 	public Token origToken;
 	
 	
-	public Symbol(Token token) {
+	public Symbol(Token token, String symb) {
 		this.origToken = token;
-		int[] decIDs = token.symbolID.clone();
+		this.symb = symb;
 	}
 	
 	
@@ -20,7 +20,9 @@ public class Symbol {
 		return origToken;
 	}
 
-	
+	public String getSymb() {
+		return symb;
+	}
 	
 	
 }

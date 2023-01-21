@@ -21,7 +21,7 @@ public class DataMiner {
 
 	
 	
-	public static String dataPath = "D:\\Dokumente\\eclipse-workspace\\DoubleRhyme\\src\\de\\frag99\\resources\\de_WORDS.txt";
+	public static final String dataPath = "D:\\Dokumente\\eclipse-workspace\\DoubleRhyme\\src\\de\\frag99\\resources\\de_WORDS.txt";
 	
 	public static Word findIPAto(String rawWord) {
 		//normales Wort rein
@@ -82,12 +82,79 @@ public class DataMiner {
 			}			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			// TODO: handle exception //lautschrift raten
+			// TODO: handle exception
 		}	
 
 		//also rhymes with itself
-		System.out.println(vowelRhymes.size());
 		return vowelRhymes;
+	}
+	
+	public static ArrayList<String> findClassicRhymesTo(Word w){
+		ArrayList<String> classicRhymes = new ArrayList<>();
+		
+		//<normales Wort>,<Wort in Lautschrift>,... e.g. user vorgeschlagen
+		FileInputStream inputStream = null;
+		Scanner sc = null;
+		
+		try {			
+			inputStream = new FileInputStream(dataPath);
+			sc = new Scanner(inputStream, "UTF-8");			
+					
+			while(sc.hasNextLine()) {				
+				String line = sc.nextLine();				
+				ArrayList<String> data = new ArrayList<>(Arrays.asList(line.split(";")));
+				
+				Tokenizer tempT = new Tokenizer(data.get(1));
+				
+				Word tempW = new Word();
+				tempW = tempT.tokenize();
+				if(w.classicRhymesWith(tempW)) {
+					
+					classicRhymes.add(data.get(0));
+				}
+					
+			}			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}	
+
+		//also rhymes with itself
+		return classicRhymes;
+	}
+	
+	public static ArrayList<String> findDoubleRhymesTo(Word w) {
+		ArrayList<String> classicRhymes = new ArrayList<>();
+		
+		//<normales Wort>,<Wort in Lautschrift>,... e.g. user vorgeschlagen
+		FileInputStream inputStream = null;
+		Scanner sc = null;
+		
+		try {			
+			inputStream = new FileInputStream(dataPath);
+			sc = new Scanner(inputStream, "UTF-8");			
+					
+			while(sc.hasNextLine()) {				
+				String line = sc.nextLine();				
+				ArrayList<String> data = new ArrayList<>(Arrays.asList(line.split(";")));
+				
+				Tokenizer tempT = new Tokenizer(data.get(1));
+				
+				Word tempW = new Word();
+				tempW = tempT.tokenize();
+				if(w.classicRhymesWith(tempW)) {
+					
+					classicRhymes.add(data.get(0));
+				}
+					
+			}			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}	
+
+		//also rhymes with itself
+		return classicRhymes;
 	}
 	
 	public static void parseXML() throws ParserConfigurationException, SAXException, IOException {
@@ -97,6 +164,8 @@ public class DataMiner {
 		saxParser.parse("G:\\XML DUMP\\dewiktionary-latest-pages-articles.xml", new PageHandler());
 		
 	}
+
+	
 	
 	
 	
