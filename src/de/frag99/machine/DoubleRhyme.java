@@ -1,8 +1,12 @@
 package de.frag99.machine;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.FactoryConfigurationError;
+import javax.xml.stream.XMLStreamException;
 
 import org.xml.sax.SAXException;
 
@@ -19,12 +23,12 @@ public class DoubleRhyme {
 
 
 		
-		args[0] = "Krankenhaus";						//<----------USER EINGABE
+		args[0] = "obst";								//<----------USER EINGABE
 		args[1] = "double";
 		args[2] = "de";
-		args[3] = ""; //XML					//<----------PARSE NEW DATABASE FLAG
+		args[3] = "RHYME"; //XML, REPARSE, RHYME			//<----------PARSE NEW DATABASE FLAG
 		
-		if(args[3] != "XML") {
+		if(args[3] == "RHYME") {
 			long startTime = System.currentTimeMillis();
 			int i = 0;
 			
@@ -77,13 +81,33 @@ public class DoubleRhyme {
 			
 			System.out.println((System.currentTimeMillis()-startTime)/1000.0f + " Sekunden");
 			
-		}else {
+		}else if(args[3] == "XML"){
 			try {
 				DataMiner.parseXML();
 			} catch (ParserConfigurationException | SAXException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}else if(args[3] =="REPARSE"){
+			
+			try {
+				DataMiner.reparseDatabase();
+			} catch (FileNotFoundException | UnsupportedEncodingException | XMLStreamException
+					| FactoryConfigurationError e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}else {
+			//DEBUG ONLY
+			Word w1 = DataMiner.findIPAto("pst");
+			Word w2 = DataMiner.findIPAto("obst");
+			System.out.println(w1);
+			System.out.println(w2);
+			System.out.println(w1.classicRhymesWith(w2));
+			System.out.println(w1);
+			System.out.println(w2);
 		}
 
 		

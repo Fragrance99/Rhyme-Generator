@@ -18,6 +18,7 @@ public class Symbol {
 		if(this.symb.equals(s.symb)) {
 			return true;
 		}
+		
 		return false;
 	}
 

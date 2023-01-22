@@ -65,7 +65,9 @@ public enum Token {
 	CR ("\\r", TokenType.OTHER),
 	LF ("\\n", TokenType.OTHER),
 	
-	CONSONANT (".?", TokenType.CONSONANT); //all other symbols, interpreted as consonants for now
+	CONSONANT (".?", TokenType.CONSONANT), //all other symbols, interpreted as consonants for now
+	
+	VOWEL_ANY ("", TokenType.VOWEL);
 	
 	
 	public final Pattern pattern;

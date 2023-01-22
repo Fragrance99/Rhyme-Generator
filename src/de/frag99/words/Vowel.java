@@ -20,6 +20,9 @@ public class Vowel extends Symbol{
 		if(this.origToken.equals(v.getOrigToken()) && this.position == ((Vowel) v).getPosition()) {
 			return true;
 		}
+		if(this.origToken == Token.VOWEL_ANY || v.origToken == Token.VOWEL_ANY) {
+			return true;
+		}
 		return false;
 	}
 	

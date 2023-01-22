@@ -34,7 +34,7 @@ public class Word {
 				symbols.add(new Symbol(t, rawSymbols.get(symbolIndex)));
 				break;		
 			case EMPH:
-				symbols.add(new Symbol(t, rawSymbols.get(symbolIndex)));
+				//symbols.add(new Symbol(t, rawSymbols.get(symbolIndex)));
 				break;
 			case OTHER:
 				//nix mache
@@ -61,8 +61,15 @@ public class Word {
 			}
 		}
 		
+		if(vowels1.isEmpty()) {
+			vowels1.add(new Vowel(Token.VOWEL_ANY, 0, ""));
+		}
+		if(vowels2.isEmpty()) {
+			vowels2.add(new Vowel(Token.VOWEL_ANY, 0, ""));
+		}
+		
 		//check if vowels have identical values
-		if(!vowels1.isEmpty()) {
+
 			if(vowels1.size() == vowels2.size()) {
 				for(int i = 0; i<vowels1.size(); i++) {
 					if(!vowels1.get(i).rhymesWith(vowels2.get(i))) {
@@ -72,9 +79,7 @@ public class Word {
 			}else {
 				return false;
 			}
-		}else {
-			return false;
-		}
+		
 		
 		
 		return true;
@@ -88,12 +93,15 @@ public class Word {
 		ArrayList<Symbol> lastSyllable = new ArrayList<>();
 		
 		int i = getIndexOfLastVowel();
-		if(i>0) {
+		if(i>=0) {
 			while(i<symbols.size()) {
 				lastSyllable.add(symbols.get(i));
 				//immernoch in lautschrift
 				i++;
 			}
+		}else {
+			symbols.add(0, new Vowel(Token.VOWEL_ANY, 0, ""));
+			return symbols;
 		}
 			
 		return lastSyllable;
@@ -101,13 +109,17 @@ public class Word {
 	
 	public boolean classicRhymesWith(Word w2) {
 		ArrayList<Symbol> lastSyllable1 = this.getLastSyll();
+
 		ArrayList<Symbol> lastSyllable2 = w2.getLastSyll();
+
+
 		
 		if(!lastSyllable1.isEmpty()) {
 			if(lastSyllable1.size() == lastSyllable2.size()) {
 				for(int i = 0; i<lastSyllable1.size(); i++) {
 					if(!lastSyllable1.get(i).rhymesWith(lastSyllable2.get(i))) {
 						//TODO 
+						
 						return false;
 					}
 					
