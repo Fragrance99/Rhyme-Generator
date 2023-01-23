@@ -34,6 +34,7 @@ public class Word {
 				symbols.add(new Symbol(t, rawSymbols.get(symbolIndex)));
 				break;		
 			case EMPH:
+				
 				//symbols.add(new Symbol(t, rawSymbols.get(symbolIndex)));
 				break;
 			case OTHER:
@@ -61,15 +62,8 @@ public class Word {
 			}
 		}
 		
-		if(vowels1.isEmpty()) {
-			vowels1.add(new Vowel(Token.VOWEL_ANY, 0, ""));
-		}
-		if(vowels2.isEmpty()) {
-			vowels2.add(new Vowel(Token.VOWEL_ANY, 0, ""));
-		}
-		
 		//check if vowels have identical values
-
+		if(!vowels1.isEmpty()) {
 			if(vowels1.size() == vowels2.size()) {
 				for(int i = 0; i<vowels1.size(); i++) {
 					if(!vowels1.get(i).rhymesWith(vowels2.get(i))) {
@@ -79,6 +73,10 @@ public class Word {
 			}else {
 				return false;
 			}
+		}else {
+			return false;
+		}
+			
 		
 		
 		
@@ -100,7 +98,6 @@ public class Word {
 				i++;
 			}
 		}else {
-			symbols.add(0, new Vowel(Token.VOWEL_ANY, 0, ""));
 			return symbols;
 		}
 			
@@ -108,13 +105,18 @@ public class Word {
 	}
 	
 	public boolean classicRhymesWith(Word w2) {
-		ArrayList<Symbol> lastSyllable1 = this.getLastSyll();
-
-		ArrayList<Symbol> lastSyllable2 = w2.getLastSyll();
-
-
 		
-		if(!lastSyllable1.isEmpty()) {
+		ArrayList<Symbol> lastSyllable1 = this.getLastSyll();
+		if(this.getNoOfVowels() == 0) {
+			lastSyllable1.add(0, new Vowel(Token.VOWEL_ANY, 0, ""));
+		}
+		
+		ArrayList<Symbol> lastSyllable2 = w2.getLastSyll();
+		if(w2.getNoOfVowels() == 0) {
+			lastSyllable2.add(0, new Vowel(Token.VOWEL_ANY, 0, ""));
+		}
+		
+
 			if(lastSyllable1.size() == lastSyllable2.size()) {
 				for(int i = 0; i<lastSyllable1.size(); i++) {
 					if(!lastSyllable1.get(i).rhymesWith(lastSyllable2.get(i))) {
@@ -127,9 +129,7 @@ public class Word {
 			}else {
 				return false;
 			}
-		}else {
-			return false;
-		}
+
 		
 		
 		return true;
@@ -156,7 +156,14 @@ public class Word {
 		return sb.toString();
 	}
 	
-	
-	
+	public int getNoOfVowels() {
+		int i = 0;
+		for(Symbol s : symbols) {
+			if(s.getOrigToken().type == TokenType.VOWEL) {
+				i++;
+			}
+		}
+		return i;
+	}
 	
 }

@@ -176,45 +176,124 @@ public class DataMiner {
 	
 	public static void reparseDatabase() throws FileNotFoundException, UnsupportedEncodingException, XMLStreamException, FactoryConfigurationError {
 		
-//		OutputStream outputStream = new FileOutputStream(new File("G:\\XML DUMP\\newData.xml"));
-//		
-//		XMLStreamWriter out = XMLOutputFactory.newInstance().createXMLStreamWriter(
-//				new OutputStreamWriter(outputStream, "UTF-8"));
-//				
-//
-//		ArrayList<String> doubleRhymes = new ArrayList<>();
-//		
-//		//<normales Wort>,<Wort in Lautschrift>,... e.g. user vorgeschlagen
-//		FileInputStream inputStream = null;
-//		Scanner sc = null;
-//		
-//		try {			
-//			inputStream = new FileInputStream(resourcePath);
-//			sc = new Scanner(inputStream, "UTF-8");			
-//					
-//			while(sc.hasNextLine()) {				
-//				String line = sc.nextLine();				
-//				ArrayList<String> data = new ArrayList<>(Arrays.asList(line.split(";")));
-//				
-//				Tokenizer tempT = new Tokenizer(data.get(1));
-//				
-//				Word tempW = new Word();
-//				tempW = tempT.tokenize();
-//				if(tempW.)					
-//			}			
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//			// TODO: handle exception
-//		}	
-//
-//		//also rhymes with itself
-//		return doubleRhymes;
-//	
+		OutputStream outputStream = new FileOutputStream(new File("G:\\XML DUMP\\newData.xml"));
+		
+		XMLStreamWriter out = XMLOutputFactory.newInstance().createXMLStreamWriter(
+				new OutputStreamWriter(outputStream, "UTF-8"));
+				
+		
+		//<normales Wort>,<Wort in Lautschrift>,... e.g. user vorgeschlagen
+		FileInputStream inputStream = null;
+		Scanner sc = null;
+		
+		ArrayList<ArrayList<String>> allLists = new ArrayList<>(); 
+		int max = getMaxNoOfVowels();
+		for(int i = 0; i<=max; i++) {
+			ArrayList<String> vowelList = new ArrayList<>();
+			allLists.add(vowelList);
+		}
+		System.out.println(max);
+		try {			
+			inputStream = new FileInputStream(resourcePath);
+			sc = new Scanner(inputStream, "UTF-8");			
+			
+			//while(!isRessourceEmpty()) {
+				
+				while(sc.hasNextLine()) {
+					String line = sc.nextLine();
+					if(line!="") {
+						ArrayList<String> data = new ArrayList<>(Arrays.asList(line.split(";")));
+						Tokenizer tempT = new Tokenizer(data.get(1));
+						Word tempW = new Word();
+						tempW = tempT.tokenize();
+						//tempW ist gelesenes Wort was zum vergleichen benötigt wird, um zu kopieren aber Variable line benutzen
+						
+						allLists.get(tempW.getNoOfVowels()).add(line);
+						//Schritt1: alle Wörter mit 0,1,2,3... Vowels zusammenfassen
+					}								
+				}
+				//alle wörter in vowel count listen unterteilt allLists[0] = 0 vowels, llLists[1] = 1 vowel etc... mit line als parameter
+				
+				for(int i = 0; i<allLists.size(); i++) {
+					ArrayList<ArrayList<String>> vowelRhymeList = new ArrayList<>();
+					for(String wordAndIPA : allLists.get(i)) {
+						//i ist anzahl der vokale die jedes wort aus der i-ten liste hat
+						//unterteile jede i-te liste in j-listen, sodass sich die wörter untereinander vokalreimen
+						
+						
+						
+					}
+				}
+				
+				
+				System.out.println("done");
+				
+			//}
+		
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}	
+
+		//also rhymes with itself
+		
+	
 		
 	}
 	
+	private static int getMaxNoOfVowels() {
+		int max = 0;
+		FileInputStream inputStream = null;
+		Scanner sc = null;
+		try {
+			inputStream = new FileInputStream(resourcePath);
+			sc = new Scanner(inputStream, "UTF-8");	
+			while(sc.hasNextLine()) {
+				String line = sc.nextLine();
+				ArrayList<String> data = new ArrayList<>(Arrays.asList(line.split(";")));
+				Tokenizer tempT = new Tokenizer(data.get(1));
+				Word tempW = new Word();
+				tempW = tempT.tokenize();
+				
+				if(tempW.getNoOfVowels()> max) {
+					
+					max = tempW.getNoOfVowels();
+				}
+			}
+			
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return max;
+	}
 	
-	
+	private static boolean isRessourceEmpty() {
+		
+		FileInputStream inputStream = null;
+		Scanner sc = null;
+		try {
+			inputStream = new FileInputStream(resourcePath);
+			sc = new Scanner(inputStream, "UTF-8");	
+			while(sc.hasNextLine()) {
+				String line = sc.nextLine();
+				if(line != "") {
+					sc.close();
+					return false;
+				}
+			}
+			
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		sc.close();
+		return true;
+	}
 	
 	
 	

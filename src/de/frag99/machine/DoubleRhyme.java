@@ -23,10 +23,10 @@ public class DoubleRhyme {
 
 
 		
-		args[0] = "obst";								//<----------USER EINGABE
-		args[1] = "double";
+		args[0] = "Krankenhaus";								//<----------USER EINGABE
+		args[1] = "vowel";
 		args[2] = "de";
-		args[3] = "RHYME"; //XML, REPARSE, RHYME			//<----------PARSE NEW DATABASE FLAG
+		args[3] = "REPARSE"; //XML, REPARSE, RHYME			//<----------PARSE NEW DATABASE FLAG
 		
 		if(args[3] == "RHYME") {
 			long startTime = System.currentTimeMillis();
@@ -102,9 +102,10 @@ public class DoubleRhyme {
 		}else {
 			//DEBUG ONLY
 			Word w1 = DataMiner.findIPAto("pst");
-			Word w2 = DataMiner.findIPAto("obst");
+			Word w2 = DataMiner.findIPAto("Obst");
 			System.out.println(w1);
 			System.out.println(w2);
+			System.out.println(w1.vowelRhymesWith(w2));
 			System.out.println(w1.classicRhymesWith(w2));
 			System.out.println(w1);
 			System.out.println(w2);
