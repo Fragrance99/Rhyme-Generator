@@ -4,7 +4,7 @@ import de.frag99.tokenizer.Token;
 
 public class Symbol {
 
-	//A symbol consists of multiple int combinations
+	
 	public String symb;
 	public Token origToken;
 	

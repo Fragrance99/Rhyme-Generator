@@ -27,9 +27,9 @@ public class DoubleRhyme {
 		args[1] = "vowel";
 		args[2] = "de";
 		args[3] = "REPARSE"; //XML, REPARSE, RHYME			//<----------PARSE NEW DATABASE FLAG
-		
+		long startTime = System.currentTimeMillis();
 		if(args[3] == "RHYME") {
-			long startTime = System.currentTimeMillis();
+			
 			int i = 0;
 			
 			Word userWord = DataMiner.findIPAto(args[0]); 
@@ -79,7 +79,7 @@ public class DoubleRhyme {
 				}
 			}
 			
-			System.out.println((System.currentTimeMillis()-startTime)/1000.0f + " Sekunden");
+			
 			
 		}else if(args[3] == "XML"){
 			try {
@@ -90,13 +90,14 @@ public class DoubleRhyme {
 			}
 		}else if(args[3] =="REPARSE"){
 			
-			try {
-				DataMiner.reparseDatabase();
-			} catch (FileNotFoundException | UnsupportedEncodingException | XMLStreamException
-					| FactoryConfigurationError e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+				try {
+					DataMiner.reparseDatabase();
+				} catch (UnsupportedEncodingException | XMLStreamException | FactoryConfigurationError e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
 			
 			
 		}else {
@@ -112,7 +113,7 @@ public class DoubleRhyme {
 		}
 
 		
-		
+		System.out.println((System.currentTimeMillis()-startTime)/1000.0f + " Sekunden");
 		
 		
 		

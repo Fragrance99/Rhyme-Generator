@@ -77,13 +77,19 @@ public enum Token {
 	
 	public final TokenType type;
 	
+	public String getSymbol() {
+		return symbol;
+	}
+	
 	Token(String regex, TokenType type){
 		this.pattern = Pattern.compile("^" + regex);		
 		this.symbol = regex;
 		this.type = type;
 	}
 	
-	
+	public TokenType getTokenType() {
+		return type;
+	}
 	
 	int endOfMatch(String s) {
         Matcher m = pattern.matcher(s);

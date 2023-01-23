@@ -1,12 +1,8 @@
 package de.frag99.miners;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,9 +12,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.stream.FactoryConfigurationError;
-import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
 
 import org.xml.sax.SAXException;
 
@@ -32,6 +26,7 @@ public class DataMiner {
 	
 	public static final String resourcePath = "D:\\Dokumente\\eclipse-workspace\\DoubleRhyme\\src\\de\\frag99\\resources\\de_WORDS.txt";
 	
+	static int debug;
 	public static Word findIPAto(String rawWord) {
 		//normales Wort rein
 		Word word = new Word();
@@ -174,132 +169,69 @@ public class DataMiner {
 	}
 
 	
-	public static void reparseDatabase() throws FileNotFoundException, UnsupportedEncodingException, XMLStreamException, FactoryConfigurationError {
-		
-		OutputStream outputStream = new FileOutputStream(new File("G:\\XML DUMP\\newData.xml"));
-		
-		XMLStreamWriter out = XMLOutputFactory.newInstance().createXMLStreamWriter(
-				new OutputStreamWriter(outputStream, "UTF-8"));
-				
+	public static void reparseDatabase() throws UnsupportedEncodingException, XMLStreamException, FactoryConfigurationError  {
 		
 		//<normales Wort>,<Wort in Lautschrift>,... e.g. user vorgeschlagen
 		FileInputStream inputStream = null;
 		Scanner sc = null;
 		
-		ArrayList<ArrayList<String>> allLists = new ArrayList<>(); 
-		int max = getMaxNoOfVowels();
-		for(int i = 0; i<=max; i++) {
-			ArrayList<String> vowelList = new ArrayList<>();
-			allLists.add(vowelList);
-		}
-		System.out.println(max);
 		try {			
 			inputStream = new FileInputStream(resourcePath);
 			sc = new Scanner(inputStream, "UTF-8");			
+			Document doc = null;
+
+			if(sc.hasNextLine()) {
+				String initialWord = sc.nextLine();
+				ArrayList<String> initialData = new ArrayList<>(Arrays.asList(initialWord.split(";")));
+				String initialWordRaw = initialData.get(0);
+				String initialIpaNotation = initialData.get(1);
+				Tokenizer tempT = new Tokenizer(initialIpaNotation);
+				Word tempW = new Word(); 
+				tempW = tempT.tokenize();
+				doc = new Document(tempW, initialWordRaw, initialIpaNotation);
+			}
 			
-			//while(!isRessourceEmpty()) {
+			
 				
 				while(sc.hasNextLine()) {
 					String line = sc.nextLine();
 					if(line!="") {
 						ArrayList<String> data = new ArrayList<>(Arrays.asList(line.split(";")));
-						Tokenizer tempT = new Tokenizer(data.get(1));
-						Word tempW = new Word();
-						tempW = tempT.tokenize();
-						//tempW ist gelesenes Wort was zum vergleichen benötigt wird, um zu kopieren aber Variable line benutzen
+						String wordRaw = data.get(0);
+						String ipaNotation = data.get(1);
 						
-						allLists.get(tempW.getNoOfVowels()).add(line);
-						//Schritt1: alle Wörter mit 0,1,2,3... Vowels zusammenfassen
+						Tokenizer tempT = new Tokenizer(ipaNotation);
+						Word tempW = new Word(); 
+						tempW = tempT.tokenize();
+						
+						//System.out.println(wordRaw); //TODO
+						
+						//tempW ist gelesenes Wort was zum vergleichen benötigt wird, um zu kopieren aber Variable line benutzen
+						if(tempW.getNoOfVowels() > 0) {
+							doc.categorize(tempW, wordRaw, ipaNotation);
+						}else {
+							//keine vokalreime g funden
+						}
+					
+						
+						
 					}								
 				}
-				//alle wörter in vowel count listen unterteilt allLists[0] = 0 vowels, llLists[1] = 1 vowel etc... mit line als parameter
-				
-				for(int i = 0; i<allLists.size(); i++) {
-					ArrayList<ArrayList<String>> vowelRhymeList = new ArrayList<>();
-					for(String wordAndIPA : allLists.get(i)) {
-						//i ist anzahl der vokale die jedes wort aus der i-ten liste hat
-						//unterteile jede i-te liste in j-listen, sodass sich die wörter untereinander vokalreimen
-						
-						
-						
-					}
-				}
-				
-				
-				System.out.println("done");
-				
-			//}
-		
+	
+			System.out.println("Datenstruktur erstellt");
+			doc.xmlParse("G:\\XML DUMP\\newData.xml");
+			
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			// TODO: handle exception
 		}	
 
 		//also rhymes with itself
-		
-	
-		
 	}
+
 	
-	private static int getMaxNoOfVowels() {
-		int max = 0;
-		FileInputStream inputStream = null;
-		Scanner sc = null;
-		try {
-			inputStream = new FileInputStream(resourcePath);
-			sc = new Scanner(inputStream, "UTF-8");	
-			while(sc.hasNextLine()) {
-				String line = sc.nextLine();
-				ArrayList<String> data = new ArrayList<>(Arrays.asList(line.split(";")));
-				Tokenizer tempT = new Tokenizer(data.get(1));
-				Word tempW = new Word();
-				tempW = tempT.tokenize();
-				
-				if(tempW.getNoOfVowels()> max) {
-					
-					max = tempW.getNoOfVowels();
-				}
-			}
-			
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return max;
-	}
-	
-	private static boolean isRessourceEmpty() {
-		
-		FileInputStream inputStream = null;
-		Scanner sc = null;
-		try {
-			inputStream = new FileInputStream(resourcePath);
-			sc = new Scanner(inputStream, "UTF-8");	
-			while(sc.hasNextLine()) {
-				String line = sc.nextLine();
-				if(line != "") {
-					sc.close();
-					return false;
-				}
-			}
-			
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		sc.close();
-		return true;
-	}
-	
-	
-	
-	
-	
-	
+
 	
 	
 }

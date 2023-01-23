@@ -87,12 +87,18 @@ public class Word {
 		
 	}
 	
-	private ArrayList<Symbol> getLastSyll(){
+	public ArrayList<Symbol> getLastSyll(){
 		ArrayList<Symbol> lastSyllable = new ArrayList<>();
 		
 		int i = getIndexOfLastVowel();
 		if(i>=0) {
+			if(i>0) {
+				if(symbols.get(i-1).getOrigToken().getTokenType() == TokenType.VOWEL) {
+					lastSyllable.add(symbols.get(i-1));
+				}
+			}
 			while(i<symbols.size()) {
+				
 				lastSyllable.add(symbols.get(i));
 				//immernoch in lautschrift
 				i++;
@@ -144,7 +150,7 @@ public class Word {
 		return -1;
 	}
 	
-	private ArrayList<Symbol> getSymbols() {
+	public ArrayList<Symbol> getSymbols() {
 		return symbols;
 	}
 
