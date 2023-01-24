@@ -1,6 +1,5 @@
 package de.frag99.machine;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
@@ -24,54 +23,72 @@ public class DoubleRhyme {
 
 		
 		args[0] = "Krankenhaus";								//<----------USER EINGABE
-		args[1] = "vowel";
+		args[1] = "classic";
 		args[2] = "de";
-		args[3] = "REPARSE"; //XML, REPARSE, RHYME				//<----------PARSE NEW DATABASE FLAG
+		args[3] = "RHYME"; //XML, REPARSE, RHYME				//<----------PARSE NEW DATABASE FLAG
 		
 		long startTime = System.currentTimeMillis();
 		if(args[3] == "RHYME") {
 			
 			int i = 0;
 			
-			Word userWord = DataMiner.findIPAto(args[0]); 
-			if(userWord != null) {
+			String userInput = args[0];
+			if(userInput != null) {
 				
-				System.out.println(userWord.toString()); //DEBUG
-				if(userWord.toString().isBlank()) {
+				
+				if(userInput.isBlank()) {
 					System.out.println("Wort nicht gefunden");
 				}else {
 
 					switch (args[1]) {
 					case "double":
 						System.out.println("Doppelreime werden gesucht...");
-						for(String res : DataMiner.findDoubleRhymesTo(userWord)) {
-							System.out.println(res);
-							i++;
+						try {
+							for(String res : DataMiner.findDoubleRhymesTo(userInput)) {
+								System.out.println(res);
+								i++;
+							}
+						} catch (ParserConfigurationException | SAXException | IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
 						}
 						break;
 					case "vowel":
 						System.out.println("Vokalreime werden gesucht...");
-						for(String res : DataMiner.findVowelRhymesTo(userWord)) {
-							System.out.println(res);
-							i++;
+						try {
+							for(String res : DataMiner.getVowelRhymesTo(userInput)) {
+								System.out.println(res);
+								i++;
+							}
+						} catch (SAXException | IOException | ParserConfigurationException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
 						
 						break;
 					case "classic":
-						System.out.println("Klassikreime werden gesucht...");
-						for(String res : DataMiner.findClassicRhymesTo(userWord)) {
-							System.out.println(res);
-							i++;
+						
+						try {
+							for(String res : DataMiner.findClassicRhymesTo(userInput)) {
+								System.out.println(res);
+								i++;
+							}
+						} catch (ParserConfigurationException | SAXException | IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-						
-						
-						
+
 						break;
 					default:
 						break;
 					}
 					
-					System.out.println(i + " Reime gefunden");
+					if(i==0) {
+						System.out.println("Keine Reime gefunden oder Wort nicht in der Datenbank");
+					}else {
+						System.out.println(i + " Reime gefunden");
+					}
+					
 					
 					
 					

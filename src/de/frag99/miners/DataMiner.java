@@ -19,16 +19,160 @@ import org.xml.sax.SAXException;
 import de.frag99.tokenizer.Tokenizer;
 import de.frag99.words.Word;
 import de.frag99.xml.PageHandler;
+import de.frag99.xml.SaxTerminationException;
+import de.frag99.xml.WordsHandlerClassic;
+import de.frag99.xml.WordsHandlerDouble;
+import de.frag99.xml.WordsHandlerFind;
+import de.frag99.xml.WordsHandlerVowel;
 
 public class DataMiner {
 
 	
 	
-	public static final String resourcePath = "D:\\Dokumente\\eclipse-workspace\\DoubleRhyme\\src\\de\\frag99\\resources\\de_WORDS.txt";
+	public static final String resourcePath = "D:\\Dokumente\\eclipse-workspace\\DoubleRhyme\\src\\de\\frag99\\resources\\DE_WORDS.xml";
 	public static final String newXMLfile = "G:\\XML DUMP\\newData.xml";
 	public static final String wiktionaryDatabase = "G:\\XML DUMP\\dewiktionary-latest-pages-articles.xml";
 	public static int debug = 0;
 	
+	
+	public static ArrayList<String> getVowelRhymesTo(String inputWord) throws IOException, ParserConfigurationException, SAXException{
+		
+		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+		SAXParser saxParser = saxParserFactory.newSAXParser();
+		WordsHandlerVowel whv = new WordsHandlerVowel();
+		whv.setInputWord(inputWord);
+		
+		try {
+			saxParser.parse(resourcePath, whv);
+		} catch (SaxTerminationException e) {
+			//parsing ended
+		}
+		
+		
+		return whv.getAllWords();
+	}
+		
+	public static void parseXML() throws ParserConfigurationException, SAXException, IOException {
+		
+		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+		SAXParser saxParser = saxParserFactory.newSAXParser();
+		saxParser.parse(wiktionaryDatabase, new PageHandler());
+		
+	}
+	
+	public static ArrayList<String> findDoubleRhymesTo(String userInput) throws ParserConfigurationException, SAXException, IOException {
+		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+		SAXParser saxParser = saxParserFactory.newSAXParser();
+		WordsHandlerDouble whd = new WordsHandlerDouble();
+		whd.setInputWord(userInput);
+		
+		try {
+			saxParser.parse(resourcePath, whd);
+		} catch (SaxTerminationException e) {
+			//parsing ended
+		}
+		
+		
+		return whd.getAllWords();
+	}
+
+	public static ArrayList<String> findClassicRhymesTo(String inputWord) throws ParserConfigurationException, SAXException, IOException {
+		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+		SAXParser saxParser = saxParserFactory.newSAXParser();
+		WordsHandlerFind whf = new WordsHandlerFind();
+		whf.setInputWord(inputWord);
+		
+		try {
+			saxParser.parse(resourcePath, whf);
+		} catch (SaxTerminationException e) {
+			
+		}
+		
+		String lastSyll = whf.getLastSyllable();
+		ArrayList<String> res = new ArrayList<>();
+		if(!lastSyll.isEmpty()) {
+			
+			WordsHandlerClassic whc = new WordsHandlerClassic();
+			whc.setlastSyllable(lastSyll);
+
+			try {
+				saxParser.parse(resourcePath, whc);
+			} catch (SaxTerminationException e) {
+				//parsing ended
+			}
+			
+			res = whc.getAllWords();
+			
+		}
+		
+		
+		
+		
+		return res;
+	}
+
+	
+	public static void reparseDatabase() throws UnsupportedEncodingException, XMLStreamException, FactoryConfigurationError  {
+		
+		//<normales Wort>,<Wort in Lautschrift>,... e.g. user vorgeschlagen
+		FileInputStream inputStream = null;
+		Scanner sc = null;
+		
+		try {			
+			inputStream = new FileInputStream(resourcePath);
+			sc = new Scanner(inputStream, "UTF-8");			
+			Document doc = null;
+
+			if(sc.hasNextLine()) {
+				String initialWord = sc.nextLine();
+				ArrayList<String> initialData = new ArrayList<>(Arrays.asList(initialWord.split(";")));
+				String initialWordRaw = initialData.get(0);
+				String initialIpaNotation = initialData.get(1);
+				Tokenizer tempT = new Tokenizer(initialIpaNotation);
+				Word tempW = new Word(); 
+				tempW = tempT.tokenize();
+				doc = new Document(tempW, initialWordRaw, initialIpaNotation);
+			}
+			
+			
+				
+				while(sc.hasNextLine()) {
+					String line = sc.nextLine();
+					if(line!="") {
+						ArrayList<String> data = new ArrayList<>(Arrays.asList(line.split(";")));
+						String wordRaw = data.get(0);
+						String ipaNotation = data.get(1);
+						
+						Tokenizer tempT = new Tokenizer(ipaNotation);
+						Word tempW = new Word(); 
+						tempW = tempT.tokenize();
+						
+						//System.out.println(wordRaw); //TODO
+						
+						//tempW ist gelesenes Wort was zum vergleichen benötigt wird, um zu kopieren aber Variable line benutzen
+						if(tempW.getNoOfVowels() > 0) {
+							doc.categorize(tempW, wordRaw, ipaNotation);
+						}else {
+							//werden nichtbeachtet
+							
+						}
+
+					}								
+				}
+				
+			System.out.println("Datenstruktur erstellt");
+			doc.xmlParse(newXMLfile);
+			
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}	
+
+		//also rhymes with itself
+	}
+
+	//old methods for the <word>;<ipa>... notation txt file
 	public static Word findIPAto(String rawWord) {
 		//normales Wort rein
 		Word word = new Word();
@@ -156,75 +300,8 @@ public class DataMiner {
 		//also rhymes with itself
 		return doubleRhymes;
 	}
-	
-	public static void parseXML() throws ParserConfigurationException, SAXException, IOException {
-		
-		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
-		SAXParser saxParser = saxParserFactory.newSAXParser();
-		saxParser.parse(wiktionaryDatabase, new PageHandler());
-		
-	}
 
 	
-	public static void reparseDatabase() throws UnsupportedEncodingException, XMLStreamException, FactoryConfigurationError  {
-		
-		//<normales Wort>,<Wort in Lautschrift>,... e.g. user vorgeschlagen
-		FileInputStream inputStream = null;
-		Scanner sc = null;
-		
-		try {			
-			inputStream = new FileInputStream(resourcePath);
-			sc = new Scanner(inputStream, "UTF-8");			
-			Document doc = null;
-
-			if(sc.hasNextLine()) {
-				String initialWord = sc.nextLine();
-				ArrayList<String> initialData = new ArrayList<>(Arrays.asList(initialWord.split(";")));
-				String initialWordRaw = initialData.get(0);
-				String initialIpaNotation = initialData.get(1);
-				Tokenizer tempT = new Tokenizer(initialIpaNotation);
-				Word tempW = new Word(); 
-				tempW = tempT.tokenize();
-				doc = new Document(tempW, initialWordRaw, initialIpaNotation);
-			}
-			
-			
-				
-				while(sc.hasNextLine()) {
-					String line = sc.nextLine();
-					if(line!="") {
-						ArrayList<String> data = new ArrayList<>(Arrays.asList(line.split(";")));
-						String wordRaw = data.get(0);
-						String ipaNotation = data.get(1);
-						
-						Tokenizer tempT = new Tokenizer(ipaNotation);
-						Word tempW = new Word(); 
-						tempW = tempT.tokenize();
-						
-						//System.out.println(wordRaw); //TODO
-						
-						//tempW ist gelesenes Wort was zum vergleichen benötigt wird, um zu kopieren aber Variable line benutzen
-						if(tempW.getNoOfVowels() > 0) {
-							doc.categorize(tempW, wordRaw, ipaNotation);
-						}else {
-							//werden nichtbeachtet
-							
-						}
-
-					}								
-				}
-				
-			System.out.println("Datenstruktur erstellt");
-			doc.xmlParse(newXMLfile);
-			
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			// TODO: handle exception
-		}	
-
-		//also rhymes with itself
-	}
 
 	
 
