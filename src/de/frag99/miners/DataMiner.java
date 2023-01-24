@@ -25,19 +25,16 @@ public class DataMiner {
 	
 	
 	public static final String resourcePath = "D:\\Dokumente\\eclipse-workspace\\DoubleRhyme\\src\\de\\frag99\\resources\\de_WORDS.txt";
+	public static final String newXMLfile = "G:\\XML DUMP\\newData.xml";
+	public static final String wiktionaryDatabase = "G:\\XML DUMP\\dewiktionary-latest-pages-articles.xml";
+	public static int debug = 0;
 	
-	static int debug;
 	public static Word findIPAto(String rawWord) {
 		//normales Wort rein
 		Word word = new Word();
-		
-		
-				
 		//<normales Wort>,<Wort in Lautschrift>,... e.g. user vorgeschlagen
 		FileInputStream inputStream = null;
 		Scanner sc = null;
-		
-		
 		try {			
 			inputStream = new FileInputStream(resourcePath);
 			sc = new Scanner(inputStream, "UTF-8");			
@@ -164,7 +161,7 @@ public class DataMiner {
 		
 		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 		SAXParser saxParser = saxParserFactory.newSAXParser();
-		saxParser.parse("G:\\XML DUMP\\dewiktionary-latest-pages-articles.xml", new PageHandler());
+		saxParser.parse(wiktionaryDatabase, new PageHandler());
 		
 	}
 
@@ -210,16 +207,15 @@ public class DataMiner {
 						if(tempW.getNoOfVowels() > 0) {
 							doc.categorize(tempW, wordRaw, ipaNotation);
 						}else {
-							//keine vokalreime g funden
+							//werden nichtbeachtet
+							
 						}
-					
-						
-						
+
 					}								
 				}
-	
+				
 			System.out.println("Datenstruktur erstellt");
-			doc.xmlParse("G:\\XML DUMP\\newData.xml");
+			doc.xmlParse(newXMLfile);
 			
 			
 		} catch (FileNotFoundException e) {

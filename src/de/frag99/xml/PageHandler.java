@@ -56,7 +56,7 @@ public class PageHandler extends DefaultHandler{
 			if(content.toString().contains("{{Sprache|Deutsch}}")) {
 				
 				if(!(currWord.charAt(0) == '-')) {
-					Pattern pattern = Pattern.compile("\\{\\{Lautschrift\\|(.*?)\\}\\}");
+					Pattern pattern = Pattern.compile("\\{\\{IPA\\}\\} \\{\\{Lautschrift\\|(.*?)\\}\\}");
 					Matcher matcher = pattern.matcher(content);
 						if(matcher.find()) {
 							if(!matcher.group(1).isBlank()
@@ -65,7 +65,8 @@ public class PageHandler extends DefaultHandler{
 									&& !matcher.group(1).contains("=")
 									&& !matcher.group(1).contains("...")
 									&& !matcher.group(1).contains("/")
-									&& !matcher.group(1).contains(";")) {
+									&& !matcher.group(1).contains(";")
+									&& !matcher.group(1).contains("—")) {
 								if(!currWord.contains(":")) {
 									//DEBUG System.out.println(currWord+";"+matcher.group(1));
 									//<WORT>;<LAUTSCHRIFT>;<SOURCE = WIKT|USER>

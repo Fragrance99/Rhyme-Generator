@@ -26,7 +26,8 @@ public class DoubleRhyme {
 		args[0] = "Krankenhaus";								//<----------USER EINGABE
 		args[1] = "vowel";
 		args[2] = "de";
-		args[3] = "REPARSE"; //XML, REPARSE, RHYME			//<----------PARSE NEW DATABASE FLAG
+		args[3] = "REPARSE"; //XML, REPARSE, RHYME				//<----------PARSE NEW DATABASE FLAG
+		
 		long startTime = System.currentTimeMillis();
 		if(args[3] == "RHYME") {
 			
@@ -39,9 +40,7 @@ public class DoubleRhyme {
 				if(userWord.toString().isBlank()) {
 					System.out.println("Wort nicht gefunden");
 				}else {
-					
-					
-					
+
 					switch (args[1]) {
 					case "double":
 						System.out.println("Doppelreime werden gesucht...");

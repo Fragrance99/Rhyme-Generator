@@ -30,6 +30,7 @@ public enum Token {
 	VOWEL_ONDS ("ɔː", TokenType.VOWEL), //Default(1)
 	VOWEL_ONDS_SHORT ("ɔ̃", TokenType.VOWEL), //Fondue(1)
 	VOWEL_OE_LONG ("øː", TokenType.VOWEL), //gehören(2), Goethe(1)
+	VOWEL_OE_OPEN ("œ̃", TokenType.VOWEL),
 	VOWEL_UH_LONG ("œː", TokenType.VOWEL), //Burger(1)
 	VOWEL_AUH ("œ̃", TokenType.VOWEL), //Lundist(1)
 	VOWEL_U_LONG ("uː", TokenType.VOWEL), //zu, cool
@@ -43,20 +44,35 @@ public enum Token {
 	
 	//1 characters long
 	VOWEL_A ("a", TokenType.VOWEL), //das, Country(1)
+	VOWEL_AEH ("ʌ", TokenType.VOWEL), //butter(british)(2)
 	VOWEL_ER ("ɐ", TokenType.VOWEL), //über
 	VOWEL_E ("e", TokenType.VOWEL), //jedoch(1)
+	VOWEL_EH ("ɘ", TokenType.VOWEL), 
 	VOWEL_AE ("ɛ", TokenType.VOWEL), //es, Camp
+	VOWEL_AEOEH ("ɜ", TokenType.VOWEL), //bird(british)
+	VOWEL_AE_DUPLICATE ("æ", TokenType.VOWEL), //smash
 	VOWEL_AE_SHORT ("ə", TokenType.VOWEL), //Alle(2)
 	VOWEL_I ("i", TokenType.VOWEL), //Minute(1)
+	VOWEL_I_NASAL ("ĩ", TokenType.VOWEL), //
+	VOWEL_I_DULL ("ɨ", TokenType.VOWEL),
 	VOWEL_I_VERYSHORT ("ɪ", TokenType.VOWEL), //in
+	VOWEL_UH_DULL ("ɯ", TokenType.VOWEL),
 	VOWEL_O ("o", TokenType.VOWEL), //Prozent
+	VOWEL_O_CLOSED ("ɤ", TokenType.VOWEL),
 	VOWEL_ONDS_VERYSHORT ("ɔ", TokenType.VOWEL), //von
+	VOWEL_ONDS_NASAL ("õ", TokenType.VOWEL),
+	VOWEL_ONG ("ɑ", TokenType.VOWEL), //calm
 	VOWEL_OE ("ø", TokenType.VOWEL), //öko(1)
+	VOWEL_OE_LIGHT ("ɵ", TokenType.VOWEL),
+	VOWEL_OE_LIGHT_OPEN ("ɞ", TokenType.VOWEL),
+	VOWEL_AEOE ("ɶ", TokenType.VOWEL),
 	VOWEL_UH ("œ", TokenType.VOWEL), //können(1)
 	VOWEL_U ("u", TokenType.VOWEL), //Tourist(1)
 	VOWEL_U_VERYSHORT ("ʊ", TokenType.VOWEL), //und
 	VOWEL_UE ("y", TokenType.VOWEL), //Büro
 	VOWEL_UE_VERYSHORT ("ʏ", TokenType.VOWEL), //müssen(1)
+	VOWEL_UE_CLOSED("ũ", TokenType.VOWEL),
+	VOWEL_UE_OPEN ("ʉ", TokenType.VOWEL),
 	
 	EMPHSYLL ("ˈ", TokenType.EMPH),
 	
