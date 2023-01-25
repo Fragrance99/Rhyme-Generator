@@ -3,6 +3,7 @@ package de.frag99.miners;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,10 +30,10 @@ public class DataMiner {
 
 	
 	
-	public static final String resourcePath = "D:\\Dokumente\\eclipse-workspace\\DoubleRhyme\\src\\de\\frag99\\resources\\DE_WORDS.xml";
-	public static final String newXMLfile = "G:\\XML DUMP\\newData.xml";
-	public static final String wiktionaryDatabase = "G:\\XML DUMP\\dewiktionary-latest-pages-articles.xml";
-	public static int debug = 0;
+	public static final String resourcePath = "/de/frag99/resources/DE_WORDS.xml";
+	
+	public static final String newXMLfile = "G:\\XML DUMP\\newData.xml"; //FOR PARSING
+	public static final String wiktionaryDatabase = "G:\\XML DUMP\\dewiktionary-latest-pages-articles.xml"; //FOR PARSING
 	
 	
 	public static ArrayList<String> getVowelRhymesTo(String inputWord) throws IOException, ParserConfigurationException, SAXException{
@@ -42,8 +43,10 @@ public class DataMiner {
 		WordsHandlerVowel whv = new WordsHandlerVowel();
 		whv.setInputWord(inputWord);
 		
+		InputStream is = DataMiner.class.getResourceAsStream(resourcePath);
+		
 		try {
-			saxParser.parse(resourcePath, whv);
+			saxParser.parse(is, whv);
 		} catch (SaxTerminationException e) {
 			//parsing ended
 		}
@@ -66,14 +69,34 @@ public class DataMiner {
 		WordsHandlerDouble whd = new WordsHandlerDouble();
 		whd.setInputWord(userInput);
 		
+		InputStream is = DataMiner.class.getResourceAsStream(resourcePath);
+		
 		try {
-			saxParser.parse(resourcePath, whd);
+			saxParser.parse(is, whd);
 		} catch (SaxTerminationException e) {
 			//parsing ended
 		}
 		
 		
 		return whd.getAllWords();
+	}
+	
+	public static Word getIPAto(String inputWord) throws ParserConfigurationException, SAXException, IOException {
+		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+		SAXParser saxParser = saxParserFactory.newSAXParser();
+		WordsHandlerFind whf = new WordsHandlerFind();
+		whf.setInputWord(inputWord);
+		
+		InputStream is = DataMiner.class.getResourceAsStream(resourcePath);
+		
+		try {
+			saxParser.parse(is, whf);
+		} catch (SaxTerminationException e) {
+			
+		}
+		
+		return whf.getWord();
+		
 	}
 
 	public static ArrayList<String> findClassicRhymesTo(String inputWord) throws ParserConfigurationException, SAXException, IOException {
@@ -82,8 +105,10 @@ public class DataMiner {
 		WordsHandlerFind whf = new WordsHandlerFind();
 		whf.setInputWord(inputWord);
 		
+		InputStream is = DataMiner.class.getResourceAsStream(resourcePath);
+		
 		try {
-			saxParser.parse(resourcePath, whf);
+			saxParser.parse(is, whf);
 		} catch (SaxTerminationException e) {
 			
 		}
@@ -95,8 +120,10 @@ public class DataMiner {
 			WordsHandlerClassic whc = new WordsHandlerClassic();
 			whc.setlastSyllable(lastSyll);
 
+			is = DataMiner.class.getResourceAsStream(resourcePath);
+			
 			try {
-				saxParser.parse(resourcePath, whc);
+				saxParser.parse(is, whc);
 			} catch (SaxTerminationException e) {
 				//parsing ended
 			}
@@ -104,10 +131,6 @@ public class DataMiner {
 			res = whc.getAllWords();
 			
 		}
-		
-		
-		
-		
 		return res;
 	}
 

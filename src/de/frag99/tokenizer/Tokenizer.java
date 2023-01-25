@@ -33,6 +33,8 @@ public class Tokenizer {
 		}
 		
 		exhausted = true;
+		
+		
 	}
 	
 	private boolean findNextToken() {
