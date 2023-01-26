@@ -15,9 +15,9 @@ import org.xml.sax.helpers.DefaultHandler;
 public class PageHandler extends DefaultHandler{
 
 	private final String outputFile = "G:\\XML DUMP\\out.txt";
-	String currWord;
-	boolean isInTitle = false;
-	boolean isInText = false;
+	private String currWord;
+	private boolean isInTitle = false;
+	private boolean isInText = false;
 	private StringBuilder content = new StringBuilder();
 	
 	@Override
@@ -55,18 +55,20 @@ public class PageHandler extends DefaultHandler{
 			//{{Sprache|Deutsch}} {{Lautschrift|<iwas>}}
 			if(content.toString().contains("{{Sprache|Deutsch}}")) {
 				
-				if(!(currWord.charAt(0) == '-')) {
+				if(!(currWord.charAt(0) == '-') //sprichwort
+						&& !(currWord.charAt(currWord.length()-1) == '’')) { //genitiv
 					Pattern pattern = Pattern.compile("\\{\\{IPA\\}\\} \\{\\{Lautschrift\\|(.*?)\\}\\}");
 					Matcher matcher = pattern.matcher(content);
 						if(matcher.find()) {
 							if(!matcher.group(1).isBlank()
 									//Ausnahmen wegen inkonsistenter Datenaufteilung
-									&& !matcher.group(1).contains("…")
-									&& !matcher.group(1).contains("=")
-									&& !matcher.group(1).contains("...")
-									&& !matcher.group(1).contains("/")
-									&& !matcher.group(1).contains(";")
-									&& !matcher.group(1).contains("—")) {
+									&& !matcher.group(1).contains("…") //ipa nicht vorhanden
+									&& !matcher.group(1).contains("=") //ipa nicht vorhanden
+									&& !matcher.group(1).contains("...") //ipa nicht vorhanden
+									&& !matcher.group(1).contains("/") //ipa nicht vorhanden
+									&& !matcher.group(1).contains(";") //ipa nicht vorhanden
+									&& !matcher.group(1).contains("—") //ipa nicht vorhanden
+									&& !matcher.group(1).contains(" ")) { //ipa enthält leerzeichen
 								if(!currWord.contains(":")) {
 									//DEBUG System.out.println(currWord+";"+matcher.group(1));
 									//<WORT>;<LAUTSCHRIFT>;<SOURCE = WIKT|USER>

@@ -6,6 +6,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import de.frag99.words.Word;
+
 public class WordsHandlerClassic extends DefaultHandler{
 
 	//suche word aus allen words in liste, gib die vowelrhymeclass aus, in der gesuchtes word ist
@@ -34,6 +36,9 @@ public class WordsHandlerClassic extends DefaultHandler{
 		
 		if(qName.equals("ClasRhy")) {
 			if(attributes.getValue(0).equals(lastSyllable)) {
+				
+				
+				
 				inCorrectClasRhyClass = true;
 			}else {
 				inCorrectClasRhyClass = false;
@@ -64,5 +69,6 @@ public class WordsHandlerClassic extends DefaultHandler{
 	public void setlastSyllable(String lastSyllable) {
 		this.lastSyllable = lastSyllable;
 	}
+
 	
 }

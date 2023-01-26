@@ -13,7 +13,7 @@ public class WordsHandlerFind extends DefaultHandler{
 	//suche word aus allen words in liste, gib die vowelrhymeclass aus, in der gesuchtes word ist
 	
 	private String lastSyllable = "";
-	private Word word;
+	private Word foundWord;
 	private String inputWord;
 	
 	@Override
@@ -34,10 +34,10 @@ public class WordsHandlerFind extends DefaultHandler{
 			if(inputWord.equalsIgnoreCase(attributes.getValue(0))) {
 				//inputWort gefunden, lastSyllable ausgeben
 				Tokenizer tempT = new Tokenizer(attributes.getValue(1));
-				this.word = tempT.tokenize();
+				this.foundWord = tempT.tokenize();
 				
 				StringBuilder sb = new StringBuilder();
-				for(Symbol s : this.word.getLastSyll()) {
+				for(Symbol s : this.foundWord.getLastSyll()) {
 					sb.append(s.getSymb());
 				}
 				lastSyllable = sb.toString();
@@ -50,8 +50,8 @@ public class WordsHandlerFind extends DefaultHandler{
 		}
 	}
 	
-	public Word getWord() {
-		return word;
+	public Word getFoundWord() {
+		return foundWord;
 	}
 
 	public void setInputWord(String userInput) {

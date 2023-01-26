@@ -5,19 +5,20 @@ import de.frag99.tokenizer.Token;
 public class Vowel extends Symbol{
 
 	//gives the syllable position
-	private int position;
+	
 	private RhymeClass rhymeClass;
 	
 	
 
-	public Vowel(Token token, int pos, String symb) {
+	public Vowel(Token token, String symb) {
 		super(token, symb);
-		this.position = pos;
+		
 	}
 	
 	public boolean rhymesWith(Symbol v) {
 		//now: check if symbols are identical, later: check if in same RhymeClass
-		if(this.origToken.equals(v.getOrigToken()) && this.position == ((Vowel) v).getPosition()) {
+
+		if(this.origToken == v.getOrigToken()) {
 			return true;
 		}
 		if(this.origToken == Token.VOWEL_ANY || v.origToken == Token.VOWEL_ANY) {
@@ -27,9 +28,7 @@ public class Vowel extends Symbol{
 	}
 	
 	
-	public int getPosition() {
-		return position;
-	}
+	
 	
 
 	

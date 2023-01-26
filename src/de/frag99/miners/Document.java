@@ -56,7 +56,9 @@ public class Document {
 		
 		
 		out.writeStartDocument();
+		out.writeCharacters(System.lineSeparator());
 		out.writeStartElement("DE_WORDS");
+		
 		int vowelCount = 1;
 		while(!allPrinted()) {
 			

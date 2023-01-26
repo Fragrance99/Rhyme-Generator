@@ -80,6 +80,7 @@ public enum Token {
 	ESCAPE ("\\\\", TokenType.OTHER),
 	CR ("\\r", TokenType.OTHER),
 	LF ("\\n", TokenType.OTHER),
+	SEMICOLON (";", TokenType.OTHER),
 	
 	CONSONANT (".?", TokenType.CONSONANT), //all other symbols, interpreted as consonants for now
 	

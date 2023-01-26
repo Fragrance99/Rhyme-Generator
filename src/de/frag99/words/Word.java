@@ -1,6 +1,7 @@
 package de.frag99.words;
 
 import java.util.ArrayList;
+
 import de.frag99.tokenizer.Token;
 import de.frag99.tokenizer.TokenType;
 
@@ -18,15 +19,21 @@ public class Word {
 		
 	}
 	
+	public void append(Word w) {
+		for(Symbol sym : w.getSymbols()) {
+			symbols.add(sym);
+		}
+	}
+	
 	public void setSymbols(ArrayList<Token> tokens, ArrayList<String> rawSymbols) {
-		int vowelPosition = 0;
+		
 		int symbolIndex = 0;
 		for(Token t : tokens) {
 			
 			switch (t.type) {
 			case VOWEL:
-				symbols.add(new Vowel(t, vowelPosition, rawSymbols.get(symbolIndex)));
-				vowelPosition++;
+				symbols.add(new Vowel(t, rawSymbols.get(symbolIndex)));
+				
 				break;			
 			case CONSONANT:
 				
@@ -96,6 +103,8 @@ public class Word {
 				if(symbols.get(i-1).getOrigToken().getTokenType() == TokenType.VOWEL) {
 					lastSyllable.add(symbols.get(i-1));
 				}
+				
+				
 			}
 			while(i<symbols.size()) {
 				
@@ -114,33 +123,41 @@ public class Word {
 		
 		ArrayList<Symbol> lastSyllable1 = this.getLastSyll();
 		if(this.getNoOfVowels() == 0) {
-			lastSyllable1.add(0, new Vowel(Token.VOWEL_ANY, 0, ""));
+			lastSyllable1.add(0, new Vowel(Token.VOWEL_ANY, ""));
+			
 		}
 		
 		ArrayList<Symbol> lastSyllable2 = w2.getLastSyll();
 		if(w2.getNoOfVowels() == 0) {
-			lastSyllable2.add(0, new Vowel(Token.VOWEL_ANY, 0, ""));
+			lastSyllable2.add(0, new Vowel(Token.VOWEL_ANY, ""));
+			
 		}
-		
 
 			if(lastSyllable1.size() == lastSyllable2.size()) {
+				
 				for(int i = 0; i<lastSyllable1.size(); i++) {
-					if(!lastSyllable1.get(i).rhymesWith(lastSyllable2.get(i))) {
-						//TODO 
-						
+					if(!(lastSyllable1.get(i).rhymesWith(lastSyllable2.get(i)))) {
+						//TODO 					
 						return false;
 					}
-					
 				}
 			}else {
 				return false;
 			}
-
-		
-		
 		return true;
 	}
-
+	
+	
+	public ArrayList<Vowel> getVowels(){
+		ArrayList<Vowel> vowels = new ArrayList<>();
+		for(Symbol sym : symbols) {
+			if(sym instanceof Vowel) {
+				vowels.add((Vowel) sym);
+			}
+		}
+		return vowels;
+	}
+	
 	private int getIndexOfLastVowel() {
 		for(int i = symbols.size()-1; i>=0; i--) {
 			if(symbols.get(i).getOrigToken().type == TokenType.VOWEL) {

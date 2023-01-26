@@ -6,57 +6,89 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import de.frag99.tokenizer.Tokenizer;
+import de.frag99.words.Word;
+
 public class WordsHandlerDouble extends DefaultHandler{
 
-	//suche word aus allen words in liste, gib die vowelrhymeclass aus, in der gesuchtes word ist
+	//suche zu eingabewort die jeweilige vowelklasse
 	
 	private ArrayList<String> allWords = new ArrayList<>(); //all Words of the current VowRhyClass
-	
-
-	private boolean matchFound = false;
-	private String inputWord;
-	
-	
+	private Word inputWord;
+	private int vowelCount;
+	private boolean inCorrectVowCount = false;
+	private boolean inCorrectVowRhy = false;
+	private boolean inCorrectClasRhy = false;
 	
 	@Override
 	public void startDocument() throws SAXException {
-		System.out.println("Doppelreimsuche startet...");
+		
+		vowelCount = inputWord.getNoOfVowels();
 	}
 
 	@Override
 	public void endDocument() throws SAXException {
-		System.out.println("Doppelreimsuche beendet...");
 	}
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		
-		if(qName.equals("Word")) {
+		if(qName.equals("VowCount")) {
+			if(attributes.getValue(0).equals(""+vowelCount)) {
+				
+				inCorrectVowCount = true;
+			}
 			
-			allWords.add(attributes.getValue(0));
-			
-			if(inputWord.equalsIgnoreCase(attributes.getValue(0))) {
-				//inputWort gefunden, also weiter ganze klasse ausgeben
-				matchFound = true;
-			}	
-			
+			if(Integer.parseInt(attributes.getValue(0))>vowelCount) {
+				throw new SaxTerminationException();
+			}
 
 		}
+		
+		if(inCorrectVowCount) {
+			if(qName.equals("VowRhy")) {
+				Tokenizer tokenizer = new Tokenizer(attributes.getValue(0));
+				Word temp = tokenizer.tokenize();
+				if(inputWord.vowelRhymesWith(temp)) {
+					inCorrectVowRhy = true;
+					
+				}
+				
+			}
+		}
+		
+		if(inCorrectVowRhy) {
+			if(qName.equals("ClasRhy")) {
+				Tokenizer tokenizer = new Tokenizer(attributes.getValue(0));
+				Word temp = tokenizer.tokenize();
+				if(inputWord.classicRhymesWith(temp)) {
+					inCorrectClasRhy = true;
+				}
+			}
+		}
+		
+		
+
+		if(inCorrectClasRhy) {
+			if(qName.equals("Word")) {
+				allWords.add(attributes.getValue(0));
+			}	
+		}
+	
 	}
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		if(qName.equals("ClasRhy")) {
-			
-			if(matchFound) {
-				//liste enthält alle wörter
-				
-				//exception beendet parsing
+		if(inCorrectVowRhy) {
+			if(qName.equals("VowRhy")) {
 				throw new SaxTerminationException();
 			}
-			
-			//kein match gefunden, neue liste beginnen, alte liste löschen
-			allWords = new ArrayList<>();
+		}
+		
+		if(inCorrectClasRhy) {
+			if(qName.equals("ClasRhy")) {
+				throw new SaxTerminationException();
+			}
 		}
 
 	}
@@ -69,7 +101,7 @@ public class WordsHandlerDouble extends DefaultHandler{
 		return allWords;
 	}
 
-	public void setInputWord(String inputWord) {
+	public void setInputWord(Word inputWord) {
 		this.inputWord = inputWord;
 	}
 	
