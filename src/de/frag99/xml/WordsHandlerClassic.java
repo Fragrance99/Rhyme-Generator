@@ -23,12 +23,12 @@ public class WordsHandlerClassic extends DefaultHandler{
 	
 	@Override
 	public void startDocument() throws SAXException {
-		System.out.println("Klassikreimsuche startet...");
+		
 	}
 
 	@Override
 	public void endDocument() throws SAXException {
-		System.out.println("Klassikreimsuche beendet...");
+		
 	}
 
 	@Override

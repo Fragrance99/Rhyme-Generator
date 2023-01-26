@@ -18,12 +18,12 @@ public class WordsHandlerFind extends DefaultHandler{
 	
 	@Override
 	public void startDocument() throws SAXException {
-		System.out.println("Wortsuche startet...");
+		
 	}
 
 	@Override
 	public void endDocument() throws SAXException {
-		System.out.println("Wortsuche beendet...");
+		
 	}
 
 	@Override
