@@ -189,4 +189,8 @@ public class Word {
 		return i;
 	}
 	
+	public boolean isEmpty() {
+		return symbols.isEmpty();
+	}
+	
 }

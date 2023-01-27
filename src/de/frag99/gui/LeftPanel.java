@@ -59,10 +59,9 @@ public class LeftPanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==inputField || e.getSource() == searchButton) {
-			System.out.println("hi");
 			DoubleRhyme.userInput = inputField.getText();
 			DoubleRhyme.rhymeType = rhymeSelect.getSelectedButton();
-			System.out.println(rhymeSelect.getSelectedButton());
+			
 			
 			DoubleRhyme.lang = String.valueOf(languageSelect.getSelectedItem());
 			

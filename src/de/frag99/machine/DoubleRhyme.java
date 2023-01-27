@@ -62,9 +62,8 @@ public class DoubleRhyme {
 
 	public static void start() {
 		long startTime = System.currentTimeMillis();
+		mainframe.resetNotification();
 		if (function == "RHYME") {
-
-			int rhymeCounter = 0;
 
 			if (userInput != null) {
 				if (!userInput.isBlank()) {
@@ -84,7 +83,7 @@ public class DoubleRhyme {
 							Word toAppend = DataMiner.getIPAto(words[j]);
 
 							if (toAppend == null) {
-								System.out.println(words[j] + " ist nicht in der Datenbank, ignoriere");
+								mainframe.addNotification(words[j] + " ist nicht in der Datenbank, ignoriere");
 							} else {
 								lineInput.append(words[j] + " ");
 								wholeLine.append(toAppend);
@@ -92,9 +91,9 @@ public class DoubleRhyme {
 
 						}
 
-						if (wholeLine != null) {
+						if (!wholeLine.isEmpty()) {
 
-							System.out.println("Reime auf " + lineInput.toString());
+							mainframe.addNotification("Reime auf: " + lineInput.toString());
 
 							// hier mit wholeLine weiterarbeiten
 							ArrayList<String> results = new ArrayList<>();
@@ -104,7 +103,6 @@ public class DoubleRhyme {
 
 							switch (rhymeType) {
 							case "double":
-								System.out.println("Doppelreime werden gesucht...");
 
 								results = DataMiner.getDoubleRhymesTo(wholeLine.getSymbols());
 								// first word can be vowel rhyme
@@ -133,21 +131,12 @@ public class DoubleRhyme {
 									while (index < resfirstWord.size() && index < ressecondWord.size()) {
 										results.add(resfirstWord.get(index) + " " + ressecondWord.get(index));
 										index++;
-										rhymeCounter++;
 									}
 								}
-
-								for (String s : results) {
-									System.out.println(s);
-									rhymeCounter++;
-								}
-
-								printNo(rhymeCounter);
 
 								break;
 							case "vowel":
 								// für jede silbenkombination reime suchen
-								System.out.println("Vokalreime werden gesucht...");
 								allVowelSymbols = wholeLine.getVowels();
 
 								results = DataMiner.getVowelRhymesTo(allVowelSymbols);
@@ -163,33 +152,19 @@ public class DoubleRhyme {
 									while (index < resfirstWord.size() && index < ressecondWord.size()) {
 										results.add(resfirstWord.get(index) + " " + ressecondWord.get(index));
 										index++;
-										rhymeCounter++;
 									}
 								}
 
-								for (String s : results) {
-									System.out.println(s);
-									rhymeCounter++;
-								}
 
-								printNo(rhymeCounter);
 
 								break;
 							case "classic":
-								System.out.println("Klassikreime werden gesucht..." + System.lineSeparator());
 
 								results = DataMiner.getClassicRhymesTo(wholeLine);
 
-								for (String res : results) {
-									System.out.println(res);
-									rhymeCounter++;
-								}
-								printNo(rhymeCounter);
 								break;
 
 							default:
-								System.out.println("Usage: java -jar <word> <double|vowel|classic>");
-								System.out.println("Example: java -jar doublerhyme.jar Hochhaus double");
 								break;
 							}
 							mainframe.printText(results);
@@ -256,22 +231,11 @@ public class DoubleRhyme {
 
 			}
 
-		} else {
-			System.out.println("Usage: java -jar <word> <double|vowel|classic>");
-			System.out.println("Example: java -jar doublerhyme.jar Hochhaus double");
 		}
-		System.out.println((System.currentTimeMillis() - startTime) / 1000.0f + " Sekunden");
 		
+		System.out.println((System.currentTimeMillis() - startTime) / 1000.0f + " Sekunden");
 		mainframe.reenable();
 		
-	}
-	
-	private static void printNo(int i) {
-		if (i == 0) {
-			System.out.println("Keine Reime gefunden oder Wort nicht in der Datenbank");
-		} else {
-			System.out.println(i + " Reime gefunden");
-		}
 	}
 
 }

@@ -16,7 +16,7 @@ public class MainFrame extends JFrame{
 	public MainFrame() {
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(450, 600);
+		this.setSize(600, 700);
 		this.setLayout(new GridLayout(1, 2, 5, 5));
 		this.setLocationRelativeTo(null);
 		this.setTitle("DoubleRyhme");
@@ -35,7 +35,19 @@ public class MainFrame extends JFrame{
 		leftP.reenable();
 	}
 	
+	public void resetNotification() {
+		rightP.resetNotification();
+	}
+	
 	public void printText(ArrayList<String> results) {
 		rightP.printText(results);
+	}
+	
+	public void printNotification(String text) {
+		rightP.printNotification(text);
+	}
+	
+	public void addNotification(String text) {
+		rightP.addNotification(text);
 	}
 }

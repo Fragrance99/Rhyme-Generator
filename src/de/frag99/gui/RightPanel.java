@@ -14,17 +14,24 @@ public class RightPanel extends JPanel{
 	 */
 	private static final long serialVersionUID = 1838089018461373975L;
 	private JScrollPane scroll;
-	private JTextArea text;
+	private JTextArea textArea;
+	private JTextArea notifications;
 	
 	public RightPanel() {
 		
 			
 			this.setBackground(Color.cyan);
 			
-			text = new JTextArea(30,15);
+			textArea = new JTextArea(35,22);
+			textArea.setEditable(false);
 			
-			scroll = new JScrollPane(text);
+			notifications = new JTextArea(4,16);
+			notifications.setEditable(false);
+			
+			scroll = new JScrollPane(textArea);
 			scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+			
+			this.add(notifications);
 			
 			this.add(scroll);
 		}
@@ -34,7 +41,23 @@ public class RightPanel extends JPanel{
 		for(String s : results) {
 			sb.append(s + System.lineSeparator());
 		}
-		text.setText(sb.toString());
+		this.textArea.setText(sb.toString());
+	}
+	
+	public void printNotification(String text) {
+		this.notifications.setText(text);
+	}
+	
+	public void addNotification(String text) {
+		if(notifications.getText().isBlank()) {
+			printNotification(text);
+		}else {
+			this.notifications.setText(notifications.getText() + System.lineSeparator() + text);
+		}		
+	}
+	
+	public void resetNotification() {
+		notifications.setText("");
 	}
 	
 }
