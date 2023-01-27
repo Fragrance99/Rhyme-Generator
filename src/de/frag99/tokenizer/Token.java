@@ -74,7 +74,8 @@ public enum Token {
 	VOWEL_UE_CLOSED("ũ", TokenType.VOWEL),
 	VOWEL_UE_OPEN ("ʉ", TokenType.VOWEL),
 	
-	EMPHSYLL ("ˈ", TokenType.EMPH),
+	EMPH_MAIN ("ˈ", TokenType.EMPH),
+	EMPH_SEC ("ˌ", TokenType.EMPH),
 	
 	WS (" ", TokenType.OTHER),
 	ESCAPE ("\\\\", TokenType.OTHER),
@@ -89,7 +90,6 @@ public enum Token {
 	
 	public final Pattern pattern;
 	public final String symbol;
-	//symbol in int representation
 	
 	
 	public final TokenType type;

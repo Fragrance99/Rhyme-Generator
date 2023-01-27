@@ -33,6 +33,7 @@ public class LeftPanel extends JPanel implements ActionListener{
 		inputField = new JTextField();
 		inputField.setPreferredSize(new Dimension(50, 50));
 		inputField.addActionListener(this);
+		inputField.requestFocus();
 		
 		searchButton = new JButton();
 		searchButton.setText("Search");
@@ -81,6 +82,8 @@ public class LeftPanel extends JPanel implements ActionListener{
 		searchButton.setEnabled(true);
 		rhymeSelect.setButtonsEnabled(true);
 		languageSelect.setEnabled(true);
+		inputField.requestFocus();
+		inputField.selectAll();
 	}
 	
 

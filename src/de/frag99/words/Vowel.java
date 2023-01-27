@@ -7,6 +7,7 @@ public class Vowel extends Symbol{
 	//gives the syllable position
 	
 	private RhymeClass rhymeClass;
+	private boolean isAcc;
 	
 	
 
