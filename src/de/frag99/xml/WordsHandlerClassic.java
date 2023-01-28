@@ -18,11 +18,9 @@ public class WordsHandlerClassic extends DefaultHandler{
 	
 	private boolean inCorrectClasRhyClass = false;
 	
-	
-	
-	
 	@Override
 	public void startDocument() throws SAXException {
+		
 		
 	}
 
@@ -37,10 +35,9 @@ public class WordsHandlerClassic extends DefaultHandler{
 		if(qName.equals("ClasRhy")) {
 			if(attributes.getValue(0).equals(lastSyllable)) {
 				
-				
-				
 				inCorrectClasRhyClass = true;
 			}else {
+				
 				inCorrectClasRhyClass = false;
 			}
 		}

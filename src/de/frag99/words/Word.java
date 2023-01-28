@@ -27,22 +27,37 @@ public class Word {
 	
 	public void setSymbols(ArrayList<Token> tokens, ArrayList<String> rawSymbols) {
 		
+		//for 1-syll words -> no acc markigns but they are of course accentuated
+		boolean hasAccMarkings = false;
+		boolean nextVowAcc = false;
+		for(Token t : tokens) {
+			if(t.getTokenType() == TokenType.EMPH) {
+				hasAccMarkings = true;
+				break;
+			}
+		}
+		
+
+		if(!hasAccMarkings) {
+			symbols.add(new Symbol(Token.EMPH_MAIN, "ˈ")); //such that words without markings(=1 syll words) always have acc
+			nextVowAcc = true;
+		}
+		
+		
 		int symbolIndex = 0;
 		for(Token t : tokens) {
 			
 			switch (t.type) {
 			case VOWEL:
-				symbols.add(new Vowel(t, rawSymbols.get(symbolIndex)));
-				
+				symbols.add(new Vowel(t, rawSymbols.get(symbolIndex), nextVowAcc));
+				nextVowAcc = false;
 				break;			
 			case CONSONANT:
-				
-				
 				symbols.add(new Symbol(t, rawSymbols.get(symbolIndex)));
 				break;		
 			case EMPH:
-				
-				//symbols.add(new Symbol(t, rawSymbols.get(symbolIndex)));
+				nextVowAcc = true;
+				symbols.add(new Symbol(t, "ˈ"));
 				break;
 			case OTHER:
 				//nix mache
@@ -94,18 +109,15 @@ public class Word {
 		
 	}
 	
-	public ArrayList<Symbol> getLastSyll(){
+
+	
+	public ArrayList<Symbol> getLastRelevantSyll(){
+		//returns symbols starting from the penultimate vowel if the last vowel is not accentuated
+		//otherwise returns symbols starting from the last vowel
 		ArrayList<Symbol> lastSyllable = new ArrayList<>();
 		
-		int i = getIndexOfLastVowel();
+		int i = getIndexOfLastRelevantVowel();
 		if(i>=0) {
-			if(i>0) {
-				if(symbols.get(i-1).getOrigToken().getTokenType() == TokenType.VOWEL) {
-					lastSyllable.add(symbols.get(i-1));
-				}
-				
-				
-			}
 			while(i<symbols.size()) {
 				
 				lastSyllable.add(symbols.get(i));
@@ -113,26 +125,43 @@ public class Word {
 				i++;
 			}
 		}else {
-			return symbols;
+			return this.symbols;
 		}
+		
 			
 		return lastSyllable;
 	}
 	
+	private int getIndexOfLastRelevantVowel() {
+		
+		for(int i = symbols.size()-1; i>=0; i--) {
+			if(symbols.get(i).getOrigToken().type == TokenType.VOWEL) {
+				if(!((Vowel)symbols.get(i)).isAccentuated()){
+					for(int j = i-1; j>=0; j--) {
+						if(symbols.get(j).getOrigToken().type == TokenType.VOWEL) {
+							return j;
+						}
+					}
+				}
+				
+				return i;
+			}
+		}
+		return -1;
+	}
+	
 	public boolean classicRhymesWith(Word w2) {
 		
-		ArrayList<Symbol> lastSyllable1 = this.getLastSyll();
-		if(this.getNoOfVowels() == 0) {
-			lastSyllable1.add(0, new Vowel(Token.VOWEL_ANY, ""));
-			
-		}
-		
-		ArrayList<Symbol> lastSyllable2 = w2.getLastSyll();
-		if(w2.getNoOfVowels() == 0) {
-			lastSyllable2.add(0, new Vowel(Token.VOWEL_ANY, ""));
-			
-		}
-
+		ArrayList<Symbol> lastSyllable1 = this.getLastRelevantSyll();
+//		for(Symbol s : lastSyllable1) {
+//			System.out.print(s.getOrigToken() + " ");
+//		}
+//		System.out.println("");
+		ArrayList<Symbol> lastSyllable2 = w2.getLastRelevantSyll();
+//		for(Symbol s : lastSyllable2) {
+//			System.out.print(s.getOrigToken() + " ");
+//		}
+//		System.out.println("");
 			if(lastSyllable1.size() == lastSyllable2.size()) {
 				
 				for(int i = 0; i<lastSyllable1.size(); i++) {
@@ -156,15 +185,6 @@ public class Word {
 			}
 		}
 		return vowels;
-	}
-	
-	private int getIndexOfLastVowel() {
-		for(int i = symbols.size()-1; i>=0; i--) {
-			if(symbols.get(i).getOrigToken().type == TokenType.VOWEL) {
-				return i;
-			}
-		}
-		return -1;
 	}
 	
 	public ArrayList<Symbol> getSymbols() {

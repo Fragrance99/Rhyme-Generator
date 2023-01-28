@@ -60,4 +60,8 @@ public class RightPanel extends JPanel{
 		notifications.setText("");
 	}
 	
+	public void resetTextField() {
+		this.textArea.setText("");
+	}
+	
 }

@@ -37,7 +37,7 @@ public class WordsHandlerFind extends DefaultHandler{
 				this.foundWord = tempT.tokenize();
 				
 				StringBuilder sb = new StringBuilder();
-				for(Symbol s : this.foundWord.getLastSyll()) {
+				for(Symbol s : this.foundWord.getLastRelevantSyll()) {
 					sb.append(s.getSymb());
 				}
 				lastSyllable = sb.toString();

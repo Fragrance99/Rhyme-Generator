@@ -46,11 +46,11 @@ public class WordXML {
 		
 		out.writeAttribute("ipa", ipaNotation);
 		
-		if(userdefined) {
-			out.writeAttribute("usdef", "1");
-		}else {
-			out.writeAttribute("usdef", "0");
-		}
+//		if(userdefined) {
+//			out.writeAttribute("usdef", "1");
+//		}else {
+//			out.writeAttribute("usdef", "0");
+//		}
 			
 		out.writeEndElement();
 		

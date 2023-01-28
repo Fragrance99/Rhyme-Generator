@@ -75,6 +75,7 @@ public class Document {
 			}
 			vowelCount++;
 		}
+		out.writeCharacters(System.lineSeparator());
 		out.writeEndElement();
 		out.writeEndDocument();
 		

@@ -11,24 +11,23 @@ public class Vowel extends Symbol{
 	
 	
 
-	public Vowel(Token token, String symb) {
+	public Vowel(Token token, String symb, boolean isAcc) {
 		super(token, symb);
-		
+		this.isAcc = isAcc;
 	}
 	
 	public boolean rhymesWith(Symbol v) {
 		//now: check if symbols are identical, later: check if in same RhymeClass
-
+		//Maybe: check for accentation, reason not to: words with only one syllable are by default accentuated
 		if(this.origToken == v.getOrigToken()) {
-			return true;
-		}
-		if(this.origToken == Token.VOWEL_ANY || v.origToken == Token.VOWEL_ANY) {
 			return true;
 		}
 		return false;
 	}
 	
-	
+	public boolean isAccentuated() {
+		return isAcc;
+	}
 	
 	
 

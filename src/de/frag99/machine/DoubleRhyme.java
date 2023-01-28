@@ -13,6 +13,7 @@ import org.xml.sax.SAXException;
 
 import de.frag99.gui.MainFrame;
 import de.frag99.miners.DataMiner;
+import de.frag99.tokenizer.TokenType;
 import de.frag99.tokenizer.Tokenizer;
 import de.frag99.words.Symbol;
 import de.frag99.words.Vowel;
@@ -75,12 +76,15 @@ public class DoubleRhyme {
 
 						Word wholeLine = new Word();
 						StringBuilder lineInput = new StringBuilder();
-
+						
+						
+						
 						for (int j = 0; j < words.length; j++) {
 							// TODO DataMiner.getIPAto(words[j]) can be null if no word is found then
 							// "guess" words
 							
 							Word toAppend = DataMiner.getIPAto(words[j]);
+							
 
 							if (toAppend == null) {
 								mainframe.addNotification(words[j] + " ist nicht in der Datenbank, ignoriere");
@@ -90,7 +94,6 @@ public class DoubleRhyme {
 							}
 
 						}
-
 						if (!wholeLine.isEmpty()) {
 
 							mainframe.addNotification("Reime auf: " + lineInput.toString());
@@ -108,17 +111,24 @@ public class DoubleRhyme {
 								// first word can be vowel rhyme
 								// second word must be double rhyme
 								allVowelSymbols = wholeLine.getVowels();
-								ArrayList<Symbol> lastSyllSym = wholeLine.getLastSyll();
-
+								ArrayList<Symbol> lastSyllSym = wholeLine.getLastRelevantSyll();
+								
+								//get no of vowels
+								int noOfVowels = 0;
+								for(Symbol s : lastSyllSym) {
+									if(s.getOrigToken().getTokenType() == TokenType.VOWEL) {
+										noOfVowels++;
+									}
+								}
 								
 								
-								for (int k = 0; k < allVowelSymbols.size() - 1; k++) {
+								for (int k = 0; k < allVowelSymbols.size() - noOfVowels; k++) {
 									// firstword: 0 - k //last index is excluded
 									// secondword: k+1 - allVowelSymbols.size()-1
 									resfirstWord = (DataMiner.getVowelRhymesTo(allVowelSymbols.subList(0, k + 1)));
-
+									
 									List<Vowel> partOfSecond = allVowelSymbols.subList(k + 1,
-											allVowelSymbols.size() - 1); // last syllable missing
+											allVowelSymbols.size() - noOfVowels); // last vowel/s missing | 1 or 2
 									ArrayList<Symbol> second = new ArrayList<>();
 									for (Symbol s : partOfSecond) {
 										second.add(s);
@@ -126,7 +136,8 @@ public class DoubleRhyme {
 									second.addAll(lastSyllSym);
 
 									ressecondWord = DataMiner.getDoubleRhymesTo(second);
-
+									
+									
 									int index = 0;
 									while (index < resfirstWord.size() && index < ressecondWord.size()) {
 										results.add(resfirstWord.get(index) + " " + ressecondWord.get(index));
@@ -159,7 +170,7 @@ public class DoubleRhyme {
 
 								break;
 							case "classic":
-
+								
 								results = DataMiner.getClassicRhymesTo(wholeLine);
 
 								break;
@@ -169,6 +180,8 @@ public class DoubleRhyme {
 							}
 							mainframe.printText(results);
 							
+						}else {
+							mainframe.resetTextField();
 						}
 					} catch (ParserConfigurationException | SAXException | IOException e) {
 						// TODO: handle exception
@@ -199,11 +212,17 @@ public class DoubleRhyme {
 
 			try {
 
-				Tokenizer t = new Tokenizer("n̩");
-				Word w1 = t.tokenize();
-				Word w2 = DataMiner.getIPAto("Eisen");
-				Tokenizer t2 = new Tokenizer("n̩");
-				Word w3 = t2.tokenize();
+				Tokenizer t = new Tokenizer("naɪ̯t");
+				
+				Word w1 = DataMiner.findIPAto("Apfelkraut");
+				
+				Word w3 = DataMiner.getIPAto("Eisen");
+				
+				Tokenizer t2 = new Tokenizer("bəˈʁaɪ̯t");
+				Word w2 = t2.tokenize();
+				
+				ArrayList<String> res = DataMiner.findClassicRhymesTo(w1);
+				System.out.println(res.toString());
 				if (w1 != null) {
 					if (w2 != null) {
 						System.out.println(w1);
@@ -211,11 +230,11 @@ public class DoubleRhyme {
 						System.out.println(w1.vowelRhymesWith(w2));
 						System.out.println(w1.classicRhymesWith(w2));
 
-						for (Symbol s : w1.getLastSyll()) {
+						for (Symbol s : w1.getLastRelevantSyll()) {
 							System.out.println(s.symb);
 
 						}
-						for (Symbol s : w2.getLastSyll()) {
+						for (Symbol s : w2.getLastRelevantSyll()) {
 							System.out.println(s.symb);
 
 						}

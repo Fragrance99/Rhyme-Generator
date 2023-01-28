@@ -24,6 +24,7 @@ public class WordsHandlerDouble extends DefaultHandler{
 	public void startDocument() throws SAXException {
 		
 		vowelCount = inputWord.getNoOfVowels();
+		
 	}
 
 	@Override
@@ -40,6 +41,7 @@ public class WordsHandlerDouble extends DefaultHandler{
 			}
 			
 			if(Integer.parseInt(attributes.getValue(0))>vowelCount) {
+				
 				throw new SaxTerminationException();
 			}
 
@@ -47,6 +49,9 @@ public class WordsHandlerDouble extends DefaultHandler{
 		
 		if(inCorrectVowCount) {
 			if(qName.equals("VowRhy")) {
+				
+			
+				
 				Tokenizer tokenizer = new Tokenizer(attributes.getValue(0));
 				Word temp = tokenizer.tokenize();
 				if(inputWord.vowelRhymesWith(temp)) {
@@ -59,6 +64,12 @@ public class WordsHandlerDouble extends DefaultHandler{
 		
 		if(inCorrectVowRhy) {
 			if(qName.equals("ClasRhy")) {
+				
+				if(attributes.getValue(0).equals("ɛʁt͡st")) {
+					System.out.println("richtige klasse");
+				}
+				
+				
 				Tokenizer tokenizer = new Tokenizer(attributes.getValue(0));
 				Word temp = tokenizer.tokenize();
 				if(inputWord.classicRhymesWith(temp)) {
@@ -72,6 +83,7 @@ public class WordsHandlerDouble extends DefaultHandler{
 		if(inCorrectClasRhy) {
 			if(qName.equals("Word")) {
 				allWords.add(attributes.getValue(0));
+				
 			}	
 		}
 	

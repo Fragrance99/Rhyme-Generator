@@ -17,7 +17,7 @@ public class ClassicRhymesClass {
 	public ClassicRhymesClass(Word w, String fullWord, String ipaNotation) {
 		exampleWord = w;
 		lastSyllSymbols = new ArrayList<String>();
-		for(Symbol sym : w.getLastSyll()) {
+		for(Symbol sym : w.getLastRelevantSyll()) {
 			lastSyllSymbols.add(sym.getSymb());
 		}
 		WordXML firstWord = new WordXML(w, fullWord, ipaNotation);

@@ -50,4 +50,8 @@ public class MainFrame extends JFrame{
 	public void addNotification(String text) {
 		rightP.addNotification(text);
 	}
+	
+	public void resetTextField() {
+		this.rightP.resetTextField();
+	}
 }

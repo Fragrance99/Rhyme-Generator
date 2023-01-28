@@ -8,11 +8,12 @@ import javax.xml.stream.XMLStreamWriter;
 import de.frag99.tokenizer.Token;
 import de.frag99.tokenizer.TokenType;
 import de.frag99.words.Symbol;
+import de.frag99.words.Vowel;
 import de.frag99.words.Word;
 
 public class VowelRhymesClass {
 
-	public ArrayList<Token> vowelTokens;
+	public ArrayList<Vowel> vowels;
 	public ArrayList<ClassicRhymesClass> classicRhymeClasses;
 	public Word exampleWord;
 	
@@ -22,11 +23,11 @@ public class VowelRhymesClass {
 	}
 
 	public VowelRhymesClass(Word w, String fullWord, String ipaNotation) {
-		vowelTokens = new ArrayList<>();
+		vowels = new ArrayList<>();
 		exampleWord = w;
 		for(Symbol sym : w.getSymbols()) {
 			if(sym.getOrigToken().getTokenType() == TokenType.VOWEL) {
-				vowelTokens.add(sym.getOrigToken());
+				vowels.add((Vowel)sym);
 			}
 		}
 		
@@ -72,8 +73,11 @@ public class VowelRhymesClass {
 	private String getTokens4XML() {
 		StringBuilder sb = new StringBuilder();
 		
-		for(Token t : vowelTokens) {
-			sb.append(t.symbol + ";");
+		for(Vowel v : vowels) {
+			if(v.isAccentuated()) {
+				sb.append("'");
+			}
+			sb.append(v.getSymb() + ";");
 		}
 		sb.setLength(sb.length()-1);
 		return sb.toString();

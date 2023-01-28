@@ -33,10 +33,10 @@ public class DataMiner {
 
 	private static final String resourcePath = "/de/frag99/resources/DE_WORDS.xml";
 
-	private static final String wordsPath = "G:\\XML DUMP\\out.txt";
-	private static final String newXMLfile = "G:\\XML DUMP\\newData.xml"; // FOR PARSING
+	private static final String wordsPath = "G:/XML DUMP/out.txt";
+	private static final String newXMLfile = "G:/XML DUMP/newData.xml"; // FOR PARSING
 
-	private static final String wiktionaryDatabase = "G:\\XML DUMP\\dewiktionary-latest-pages-articles.xml"; // FOR
+	private static final String wiktionaryDatabase = "G:/XML DUMP/dewiktionary-latest-pages-articles.xml"; // FOR
 																												// PARSING
 
 	public static ArrayList<String> getVowelRhymesTo(List<Vowel> allVowelSymbols)
@@ -90,13 +90,16 @@ public class DataMiner {
 			throws ParserConfigurationException, SAXException, IOException {
 
 		ArrayList<String> res = new ArrayList<>();
-		ArrayList<Symbol> lastSyllSym = inputWord.getLastSyll();
+		ArrayList<Symbol> lastSyllSym = inputWord.getLastRelevantSyll();
 		StringBuilder sb = new StringBuilder();
 		for (Symbol s : lastSyllSym) {
 			sb.append(s.getSymb());
+			
 		}
 
 		String lastSyll = sb.toString();
+		
+		
 
 		InputStream is = DataMiner.class.getResourceAsStream(resourcePath);
 		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
@@ -115,9 +118,12 @@ public class DataMiner {
 				// parsing ended
 			}
 
+			
 			res = whc.getAllWords();
+			
 
 		}
+		
 		return res;
 	}
 
@@ -127,15 +133,15 @@ public class DataMiner {
 		for (Symbol v : allSymbols) {
 			sb.append(v.getSymb());
 		}
-		String vowelString = sb.toString();
+		String wordString = sb.toString();
+		
 
 		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 		SAXParser saxParser = saxParserFactory.newSAXParser();
 		WordsHandlerDouble whd = new WordsHandlerDouble();
 
-		Tokenizer tokenizer = new Tokenizer(vowelString);
+		Tokenizer tokenizer = new Tokenizer(wordString);
 		Word symbolWord = tokenizer.tokenize();
-
 		whd.setInputWord(symbolWord);
 
 		InputStream is = DataMiner.class.getResourceAsStream(resourcePath);
@@ -217,7 +223,7 @@ public class DataMiner {
 		FileInputStream inputStream = null;
 		Scanner sc = null;
 		try {
-			inputStream = new FileInputStream(resourcePath);
+			inputStream = new FileInputStream(wordsPath);
 			sc = new Scanner(inputStream, "UTF-8");
 			boolean matchFound = false;
 			while (!matchFound && sc.hasNextLine()) {
@@ -244,7 +250,7 @@ public class DataMiner {
 		Scanner sc = null;
 
 		try {
-			inputStream = new FileInputStream(resourcePath);
+			inputStream = new FileInputStream(wordsPath);
 			sc = new Scanner(inputStream, "UTF-8");
 
 			while (sc.hasNextLine()) {
@@ -279,7 +285,7 @@ public class DataMiner {
 		Scanner sc = null;
 
 		try {
-			inputStream = new FileInputStream(resourcePath);
+			inputStream = new FileInputStream(wordsPath);
 			sc = new Scanner(inputStream, "UTF-8");
 
 			while (sc.hasNextLine()) {
@@ -312,7 +318,7 @@ public class DataMiner {
 		Scanner sc = null;
 
 		try {
-			inputStream = new FileInputStream(resourcePath);
+			inputStream = new FileInputStream(wordsPath);
 			sc = new Scanner(inputStream, "UTF-8");
 
 			while (sc.hasNextLine()) {
