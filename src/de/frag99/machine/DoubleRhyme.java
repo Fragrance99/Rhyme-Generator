@@ -24,7 +24,7 @@ public class DoubleRhyme {
 	public static String userInput = "";
 	public static String rhymeType = "";
 	public static String lang = "";
-	public static String function = "RHYME";
+	public static String function = "RHYME"; // RHYME XML REPARSE DEBUG
 	static MainFrame mainframe;
 	
 	public static void main(String[] args) {

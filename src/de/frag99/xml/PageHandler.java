@@ -14,11 +14,12 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class PageHandler extends DefaultHandler{
 
-	private final String outputFile = "G:\\XML DUMP\\out.txt";
+	private final String outputFile = "G:\\XML DUMP\\outEN.txt";
 	private String currWord;
 	private boolean isInTitle = false;
 	private boolean isInText = false;
 	private StringBuilder content = new StringBuilder();
+	private int debug = 0;
 	
 	@Override
 	public void startDocument() throws SAXException {
@@ -43,6 +44,8 @@ public class PageHandler extends DefaultHandler{
 		
 	}
 
+	
+	//for english wiktionary databse
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		if(qName.equals("title")) {
@@ -53,25 +56,27 @@ public class PageHandler extends DefaultHandler{
 			isInText = false;
 			
 			//{{Sprache|Deutsch}} {{Lautschrift|<iwas>}}
-			if(content.toString().contains("{{Sprache|Deutsch}}")) {
+			if(content.toString().contains("==English==")) {
 				
 				if(!(currWord.charAt(0) == '-') //sprichwort
 						&& !(currWord.charAt(currWord.length()-1) == '’')) { //genitiv
-					Pattern pattern = Pattern.compile("\\{\\{IPA\\}\\} \\{\\{Lautschrift\\|(.*?)\\}\\}");
+					Pattern pattern = Pattern.compile("\\{\\{IPA\\|en\\|\\/(.*?)\\/");
 					Matcher matcher = pattern.matcher(content);
+					
 						if(matcher.find()) {
 							if(!matcher.group(1).isBlank()
 									//Ausnahmen wegen inkonsistenter Datenaufteilung
 									&& !matcher.group(1).contains("…") //ipa nicht vorhanden
 									&& !matcher.group(1).contains("=") //ipa nicht vorhanden
 									&& !matcher.group(1).contains("...") //ipa nicht vorhanden
-									&& !matcher.group(1).contains("/") //ipa nicht vorhanden
+									/*&& !matcher.group(1).contains("/") //ipa nicht vorhanden */
 									&& !matcher.group(1).contains(";") //ipa nicht vorhanden
 									&& !matcher.group(1).contains("—") //ipa nicht vorhanden
 									&& !matcher.group(1).contains(" ")) { //ipa enthält leerzeichen
 								if(!currWord.contains(":")) {
 									//DEBUG System.out.println(currWord+";"+matcher.group(1));
 									//<WORT>;<LAUTSCHRIFT>;<SOURCE = WIKT|USER>
+									
 									addLineTo(currWord+";"+matcher.group(1)+
 											/* ";"+"WIKT"+ */
 											System.lineSeparator() ,outputFile);
@@ -89,6 +94,52 @@ public class PageHandler extends DefaultHandler{
 		}
 	}
 
+//	for german wiktionary databse 
+//	public void endElement(String uri, String localName, String qName) throws SAXException {
+//		if(qName.equals("title")) {
+//			isInTitle = false;
+//		}
+//		
+//		if(qName.equals("text")) {
+//			isInText = false;
+//			
+//			//{{Sprache|Deutsch}} {{Lautschrift|<iwas>}}
+//			if(content.toString().contains("{{Sprache|Deutsch}}")) {
+//				
+//				if(!(currWord.charAt(0) == '-') //sprichwort
+//						&& !(currWord.charAt(currWord.length()-1) == '’')) { //genitiv
+//					Pattern pattern = Pattern.compile("\\{\\{IPA\\}\\} \\{\\{Lautschrift\\|(.*?)\\}\\}");
+//					Matcher matcher = pattern.matcher(content);
+//						if(matcher.find()) {
+//							if(!matcher.group(1).isBlank()
+//									//Ausnahmen wegen inkonsistenter Datenaufteilung
+//									&& !matcher.group(1).contains("…") //ipa nicht vorhanden
+//									&& !matcher.group(1).contains("=") //ipa nicht vorhanden
+//									&& !matcher.group(1).contains("...") //ipa nicht vorhanden
+//									&& !matcher.group(1).contains("/") //ipa nicht vorhanden
+//									&& !matcher.group(1).contains(";") //ipa nicht vorhanden
+//									&& !matcher.group(1).contains("—") //ipa nicht vorhanden
+//									&& !matcher.group(1).contains(" ")) { //ipa enthält leerzeichen
+//								if(!currWord.contains(":")) {
+//									//DEBUG System.out.println(currWord+";"+matcher.group(1));
+//									//<WORT>;<LAUTSCHRIFT>;<SOURCE = WIKT|USER>
+//									addLineTo(currWord+";"+matcher.group(1)+
+//											/* ";"+"WIKT"+ */
+//											System.lineSeparator() ,outputFile);
+//								}
+//								
+//							}
+//							
+//							
+//						}
+//				}
+//				
+//				
+//			}
+//			content.setLength(0);
+//		}
+//	} 
+	
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		if(isInTitle) {

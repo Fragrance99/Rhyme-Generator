@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 import de.frag99.machine.DoubleRhyme;
 
@@ -23,17 +24,19 @@ public class LeftPanel extends JPanel implements ActionListener{
 	private JButton searchButton;
 	private RadioButtonPanel rhymeSelect;
 	private JComboBox<String> languageSelect;
-	private final String[] languages  = {"de"};
+	private final String[] languages  = {"deutsch"};
 	
 	public LeftPanel() {
 		
-		this.setBackground(Color.LIGHT_GRAY);
+		
 		this.setLayout(new GridLayout(4, 1, 10, 20));
+		
 		
 		inputField = new JTextField();
 		inputField.setPreferredSize(new Dimension(50, 50));
 		inputField.addActionListener(this);
 		inputField.requestFocus();
+		inputField.setBorder(new TitledBorder("Input"));
 		
 		searchButton = new JButton();
 		searchButton.setText("Search");
@@ -43,14 +46,16 @@ public class LeftPanel extends JPanel implements ActionListener{
 		
 		
 		languageSelect = new JComboBox<>(languages);
-		
+		languageSelect.setBorder(new TitledBorder("Language"));
 		
 		
 		this.add(inputField);
 		this.add(searchButton);
 		
 		rhymeSelect = new RadioButtonPanel();
+		rhymeSelect.setBorder(new TitledBorder("Type of rhyme"));
 		this.add(rhymeSelect);
+		
 		
 		this.add(languageSelect);
 		

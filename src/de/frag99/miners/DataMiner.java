@@ -31,12 +31,12 @@ import de.frag99.xml.WordsHandlerVowel;
 
 public class DataMiner {
 
-	private static final String resourcePath = "/de/frag99/resources/DE_WORDS.xml";
+	private static final String resourcePathREAD = "/de/frag99/resources/DE_WORDS.xml";
 
-	private static final String wordsPath = "G:/XML DUMP/out.txt";
-	private static final String newXMLfile = "G:/XML DUMP/newData.xml"; // FOR PARSING
+	private static final String wordsPathREAD = "G:/XML DUMP/out.txt";
+	private static final String newXMLfilePARSE = "G:/XML DUMP/newData.xml"; // FOR PARSING
 
-	private static final String wiktionaryDatabase = "G:/XML DUMP/dewiktionary-latest-pages-articles.xml"; // FOR
+	private static final String wiktionaryDatabaseREAD = "G:/XML DUMP/enwiktionary-latest-pages-articles.xml"; // FOR
 																												// PARSING
 
 	public static ArrayList<String> getVowelRhymesTo(List<Vowel> allVowelSymbols)
@@ -56,7 +56,7 @@ public class DataMiner {
 		WordsHandlerVowel whv = new WordsHandlerVowel();
 		whv.setInputWord(vowelWord);
 
-		InputStream is = DataMiner.class.getResourceAsStream(resourcePath);
+		InputStream is = DataMiner.class.getResourceAsStream(resourcePathREAD);
 
 		try {
 			saxParser.parse(is, whv);
@@ -74,7 +74,7 @@ public class DataMiner {
 		WordsHandlerFind whf = new WordsHandlerFind();
 		whf.setInputWord(inputWord);
 
-		InputStream is = DataMiner.class.getResourceAsStream(resourcePath);
+		InputStream is = DataMiner.class.getResourceAsStream(resourcePathREAD);
 
 		try {
 			saxParser.parse(is, whf);
@@ -101,7 +101,7 @@ public class DataMiner {
 		
 		
 
-		InputStream is = DataMiner.class.getResourceAsStream(resourcePath);
+		InputStream is = DataMiner.class.getResourceAsStream(resourcePathREAD);
 		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 		SAXParser saxParser = saxParserFactory.newSAXParser();
 
@@ -110,7 +110,7 @@ public class DataMiner {
 			WordsHandlerClassic whc = new WordsHandlerClassic();
 			whc.setlastSyllable(lastSyll);
 
-			is = DataMiner.class.getResourceAsStream(resourcePath);
+			is = DataMiner.class.getResourceAsStream(resourcePathREAD);
 
 			try {
 				saxParser.parse(is, whc);
@@ -144,7 +144,7 @@ public class DataMiner {
 		Word symbolWord = tokenizer.tokenize();
 		whd.setInputWord(symbolWord);
 
-		InputStream is = DataMiner.class.getResourceAsStream(resourcePath);
+		InputStream is = DataMiner.class.getResourceAsStream(resourcePathREAD);
 
 		try {
 			saxParser.parse(is, whd);
@@ -163,7 +163,7 @@ public class DataMiner {
 		Scanner sc = null;
 
 		try {
-			inputStream = new FileInputStream(wordsPath);
+			inputStream = new FileInputStream(wordsPathREAD);
 			sc = new Scanner(inputStream, "UTF-8");
 			Document doc = null;
 
@@ -205,7 +205,7 @@ public class DataMiner {
 			}
 
 			System.out.println("Datenstruktur erstellt");
-			doc.xmlParse(newXMLfile);
+			doc.xmlParse(newXMLfilePARSE);
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -223,7 +223,7 @@ public class DataMiner {
 		FileInputStream inputStream = null;
 		Scanner sc = null;
 		try {
-			inputStream = new FileInputStream(wordsPath);
+			inputStream = new FileInputStream(wordsPathREAD);
 			sc = new Scanner(inputStream, "UTF-8");
 			boolean matchFound = false;
 			while (!matchFound && sc.hasNextLine()) {
@@ -250,7 +250,7 @@ public class DataMiner {
 		Scanner sc = null;
 
 		try {
-			inputStream = new FileInputStream(wordsPath);
+			inputStream = new FileInputStream(wordsPathREAD);
 			sc = new Scanner(inputStream, "UTF-8");
 
 			while (sc.hasNextLine()) {
@@ -285,7 +285,7 @@ public class DataMiner {
 		Scanner sc = null;
 
 		try {
-			inputStream = new FileInputStream(wordsPath);
+			inputStream = new FileInputStream(wordsPathREAD);
 			sc = new Scanner(inputStream, "UTF-8");
 
 			while (sc.hasNextLine()) {
@@ -318,7 +318,7 @@ public class DataMiner {
 		Scanner sc = null;
 
 		try {
-			inputStream = new FileInputStream(wordsPath);
+			inputStream = new FileInputStream(wordsPathREAD);
 			sc = new Scanner(inputStream, "UTF-8");
 
 			while (sc.hasNextLine()) {
@@ -348,7 +348,7 @@ public class DataMiner {
 
 		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 		SAXParser saxParser = saxParserFactory.newSAXParser();
-		saxParser.parse(wiktionaryDatabase, new PageHandler());
+		saxParser.parse(wiktionaryDatabaseREAD, new PageHandler());
 
 	}
 

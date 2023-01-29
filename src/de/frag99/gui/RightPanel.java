@@ -1,11 +1,15 @@
 package de.frag99.gui;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.TitledBorder;
 
 public class RightPanel extends JPanel{
 
@@ -20,20 +24,24 @@ public class RightPanel extends JPanel{
 	public RightPanel() {
 		
 			
-			this.setBackground(Color.cyan);
 			
-			textArea = new JTextArea(35,22);
+			this.setLayout(new BorderLayout(5, 10));
+			
+			textArea = new JTextArea();
 			textArea.setEditable(false);
+			textArea.setBorder(new TitledBorder("Results"));
 			
-			notifications = new JTextArea(4,16);
+			notifications = new JTextArea();
 			notifications.setEditable(false);
+			notifications.setBorder(new TitledBorder("Notifications"));
 			
 			scroll = new JScrollPane(textArea);
 			scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 			
-			this.add(notifications);
 			
-			this.add(scroll);
+			this.add(notifications, BorderLayout.NORTH);
+			
+			this.add(scroll, BorderLayout.CENTER);
 		}
 	
 	public void printText(ArrayList<String> results) {
