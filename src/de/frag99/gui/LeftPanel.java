@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-import de.frag99.machine.DoubleRhyme;
+import de.frag99.machine.RhymeGenerator;
 
 public class LeftPanel extends JPanel implements ActionListener{
 
@@ -65,11 +65,11 @@ public class LeftPanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==inputField || e.getSource() == searchButton) {
-			DoubleRhyme.userInput = inputField.getText();
-			DoubleRhyme.rhymeType = rhymeSelect.getSelectedButton();
+			RhymeGenerator.userInput = inputField.getText();
+			RhymeGenerator.rhymeType = rhymeSelect.getSelectedButton();
 			
 			
-			DoubleRhyme.lang = String.valueOf(languageSelect.getSelectedItem());
+			RhymeGenerator.lang = String.valueOf(languageSelect.getSelectedItem());
 			
 			inputField.setEnabled(false);
 			searchButton.setEnabled(false);
@@ -77,7 +77,7 @@ public class LeftPanel extends JPanel implements ActionListener{
 			languageSelect.setEnabled(false);
 			
 			//search rhymes
-			DoubleRhyme.start();
+			RhymeGenerator.start();
 		}
 
 	}

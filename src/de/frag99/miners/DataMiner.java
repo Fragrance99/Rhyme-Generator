@@ -18,7 +18,7 @@ import javax.xml.stream.XMLStreamException;
 
 import org.xml.sax.SAXException;
 
-import de.frag99.machine.DoubleRhyme;
+import de.frag99.machine.RhymeGenerator;
 import de.frag99.tokenizer.Tokenizer;
 import de.frag99.words.Symbol;
 import de.frag99.words.Vowel;
@@ -56,7 +56,7 @@ public class DataMiner {
 
 		
 		
-		InputStream is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(DoubleRhyme.lang));
+		InputStream is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(RhymeGenerator.lang));
 
 		try {
 			saxParser.parse(is, whv);
@@ -74,7 +74,7 @@ public class DataMiner {
 		WordsHandlerFind whf = new WordsHandlerFind();
 		whf.setInputWord(inputWord);
 
-		InputStream is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(DoubleRhyme.lang));
+		InputStream is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(RhymeGenerator.lang));
 
 		try {
 			saxParser.parse(is, whf);
@@ -85,7 +85,7 @@ public class DataMiner {
 			
 			for(String key : PathOrganizer.getResourcePaths().keySet()) {
 				
-				if(!key.equals(DoubleRhyme.lang)) {
+				if(!key.equals(RhymeGenerator.lang)) {
 					
 					is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(key));
 					try {
@@ -118,7 +118,7 @@ public class DataMiner {
 		
 		
 
-		InputStream is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(DoubleRhyme.lang));
+		InputStream is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(RhymeGenerator.lang));
 		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 		SAXParser saxParser = saxParserFactory.newSAXParser();
 
@@ -127,7 +127,7 @@ public class DataMiner {
 			WordsHandlerClassic whc = new WordsHandlerClassic();
 			whc.setlastSyllable(lastSyll);
 
-			is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(DoubleRhyme.lang));
+			is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(RhymeGenerator.lang));
 
 			try {
 				saxParser.parse(is, whc);
@@ -161,7 +161,7 @@ public class DataMiner {
 		Word symbolWord = tokenizer.tokenize();
 		whd.setInputWord(symbolWord);
 
-		InputStream is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(DoubleRhyme.lang));
+		InputStream is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(RhymeGenerator.lang));
 
 		try {
 			saxParser.parse(is, whd);

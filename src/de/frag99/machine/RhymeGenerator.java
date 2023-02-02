@@ -20,7 +20,7 @@ import de.frag99.words.Symbol;
 import de.frag99.words.Vowel;
 import de.frag99.words.Word;
 
-public class DoubleRhyme {
+public class RhymeGenerator {
 
 	public static String userInput = "";
 	public static String rhymeType = "";

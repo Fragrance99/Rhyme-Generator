@@ -19,7 +19,7 @@ public class MainFrame extends JFrame{
 		this.setSize(600, 700);
 		this.setLayout(new GridLayout(1, 2, 5, 5));
 		this.setLocationRelativeTo(null);
-		this.setTitle("DoubleRyhme");
+		this.setTitle("Rhyme Generator");
 		
 		leftP = new LeftPanel();
 		this.add(leftP);
