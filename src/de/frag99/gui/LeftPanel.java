@@ -24,7 +24,7 @@ public class LeftPanel extends JPanel implements ActionListener{
 	private JButton searchButton;
 	private RadioButtonPanel rhymeSelect;
 	private JComboBox<String> languageSelect;
-	private final String[] languages  = {"deutsch"};
+	private final String[] languages  = {"deutsch", "english"};
 	
 	public LeftPanel() {
 		

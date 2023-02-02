@@ -43,6 +43,8 @@ public enum Token {
 	VOWEL_EL_VERYSHORT ("l̩", TokenType.VOWEL),
 	
 	//1 characters long
+	VOWEL_ER_VERYSHORT ("ɚ", TokenType.VOWEL),
+	
 	VOWEL_A ("a", TokenType.VOWEL), //das, Country(1)
 	VOWEL_AEH ("ʌ", TokenType.VOWEL), //butter(british)(2)
 	VOWEL_ER ("ɐ", TokenType.VOWEL), //über
@@ -50,6 +52,8 @@ public enum Token {
 	VOWEL_EH ("ɘ", TokenType.VOWEL), 
 	VOWEL_AE ("ɛ", TokenType.VOWEL), //es, Camp
 	VOWEL_AEOEH ("ɜ", TokenType.VOWEL), //bird(british)
+	VOWEL_AO ("ɒ", TokenType.VOWEL),
+	VOWEL_AEOEH_DUPLICATE ("ɝ", TokenType.VOWEL),
 	VOWEL_AE_DUPLICATE ("æ", TokenType.VOWEL), //smash
 	VOWEL_AE_SHORT ("ə", TokenType.VOWEL), //Alle(2)
 	VOWEL_I ("i", TokenType.VOWEL), //Minute(1)
@@ -77,6 +81,9 @@ public enum Token {
 	EMPH_MAIN ("ˈ", TokenType.EMPH),
 	EMPH_SEC ("ˌ", TokenType.EMPH),
 	
+	SYLL_DELIMITER ("\\.", TokenType.OTHER),
+	OPT_SYLL_START ("\\(", TokenType.OTHER),
+	OPT_SYLL_END ("\\)", TokenType.OTHER),
 	WS (" ", TokenType.OTHER),
 	ESCAPE ("\\\\", TokenType.OTHER),
 	CR ("\\r", TokenType.OTHER),

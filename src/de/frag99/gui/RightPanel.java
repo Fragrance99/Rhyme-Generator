@@ -38,7 +38,6 @@ public class RightPanel extends JPanel{
 			scroll = new JScrollPane(textArea);
 			scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 			
-			
 			this.add(notifications, BorderLayout.NORTH);
 			
 			this.add(scroll, BorderLayout.CENTER);

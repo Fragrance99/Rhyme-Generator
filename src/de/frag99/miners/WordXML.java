@@ -4,6 +4,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import de.frag99.tokenizer.Tokenizer;
+import de.frag99.words.Symbol;
 import de.frag99.words.Word;
 
 public class WordXML {
@@ -19,6 +20,7 @@ public class WordXML {
 		this.word = fullWord;
 		this.ipaNotation = ipaNotation;
 		this.userdefined = false;
+		
 	}
 	
 	public WordXML(String fullWord, String ipaNotation, String userdef) {
@@ -44,7 +46,7 @@ public class WordXML {
 		out.writeStartElement("Word");
 		out.writeAttribute("w", word);
 		
-		out.writeAttribute("ipa", ipaNotation);
+		out.writeAttribute("ipa", getIPANot());
 		
 //		if(userdefined) {
 //			out.writeAttribute("usdef", "1");
@@ -53,8 +55,14 @@ public class WordXML {
 //		}
 			
 		out.writeEndElement();
-		
-		
+	}
+	
+	public String getIPANot() {
+		StringBuilder sb = new StringBuilder();
+		for(Symbol sym : this.wordObject.getSymbols()) {
+			sb.append(sym.getSymb());
+		}
+		return sb.toString();
 	}
 	
 }

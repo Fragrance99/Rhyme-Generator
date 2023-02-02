@@ -13,6 +13,7 @@ import org.xml.sax.SAXException;
 
 import de.frag99.gui.MainFrame;
 import de.frag99.miners.DataMiner;
+import de.frag99.miners.PathOrganizer;
 import de.frag99.tokenizer.TokenType;
 import de.frag99.tokenizer.Tokenizer;
 import de.frag99.words.Symbol;
@@ -33,31 +34,11 @@ public class DoubleRhyme {
 		// args[2] : sprache
 		
 		mainframe = new MainFrame();
+		PathOrganizer.createTable();
+		if(!function.equals("RHYME")) {
+			mainframe.addNotification("RHYME MODE NOT ENABLED");
+		}
 		
-		
-
-		// TODO DEBUG
-//		args[0] = "ehrenmann";
-//		args[1] = "double";
-//		args[2] = "de";
-//		args[3] = "RHYME"; // RHYME XML REPARSE DEBUG
-//
-//		if (args.length >= 2) {
-//			userInput = args[0];
-//			rhymeType = args[1];
-//
-//			if (args.length >= 3) {
-//				lang = args[2];
-//
-//				if (args.length >= 4) {
-//					function = args[3];
-//				}
-//			}
-//
-//		} else {
-//			System.out.println("Usage: java -jar <word> <double|vowel|classic>");
-//			System.out.println("Example: java -jar doublerhyme.jar Hochhaus double");
-//		}
 
 	}
 
@@ -77,15 +58,12 @@ public class DoubleRhyme {
 						Word wholeLine = new Word();
 						StringBuilder lineInput = new StringBuilder();
 						
-						
-						
 						for (int j = 0; j < words.length; j++) {
 							// TODO DataMiner.getIPAto(words[j]) can be null if no word is found then
 							// "guess" words
 							
 							Word toAppend = DataMiner.getIPAto(words[j]);
 							
-
 							if (toAppend == null) {
 								mainframe.addNotification(words[j] + " ist nicht in der Datenbank, ignoriere");
 							} else {
@@ -94,6 +72,8 @@ public class DoubleRhyme {
 							}
 
 						}
+						
+						
 						if (!wholeLine.isEmpty()) {
 
 							mainframe.addNotification("Reime auf: " + lineInput.toString());

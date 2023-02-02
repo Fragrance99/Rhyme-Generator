@@ -42,8 +42,7 @@ public class Word {
 			symbols.add(new Symbol(Token.EMPH_MAIN, "ˈ")); //such that words without markings(=1 syll words) always have acc
 			nextVowAcc = true;
 		}
-		
-		
+				
 		int symbolIndex = 0;
 		for(Token t : tokens) {
 			

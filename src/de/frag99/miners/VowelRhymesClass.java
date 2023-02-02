@@ -25,6 +25,7 @@ public class VowelRhymesClass {
 	public VowelRhymesClass(Word w, String fullWord, String ipaNotation) {
 		vowels = new ArrayList<>();
 		exampleWord = w;
+		
 		for(Symbol sym : w.getSymbols()) {
 			if(sym.getOrigToken().getTokenType() == TokenType.VOWEL) {
 				vowels.add((Vowel)sym);

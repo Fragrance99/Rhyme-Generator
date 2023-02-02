@@ -62,7 +62,6 @@ public class PageHandler extends DefaultHandler{
 						&& !(currWord.charAt(currWord.length()-1) == '’')) { //genitiv
 					Pattern pattern = Pattern.compile("\\{\\{IPA\\|en\\|\\/(.*?)\\/");
 					Matcher matcher = pattern.matcher(content);
-					
 						if(matcher.find()) {
 							if(!matcher.group(1).isBlank()
 									//Ausnahmen wegen inkonsistenter Datenaufteilung
@@ -72,7 +71,10 @@ public class PageHandler extends DefaultHandler{
 									/*&& !matcher.group(1).contains("/") //ipa nicht vorhanden */
 									&& !matcher.group(1).contains(";") //ipa nicht vorhanden
 									&& !matcher.group(1).contains("—") //ipa nicht vorhanden
-									&& !matcher.group(1).contains(" ")) { //ipa enthält leerzeichen
+									/* && !matcher.group(1).contains(" ")*/ )  { //ipa enthält leerzeichen
+								
+								
+								
 								if(!currWord.contains(":")) {
 									//DEBUG System.out.println(currWord+";"+matcher.group(1));
 									//<WORT>;<LAUTSCHRIFT>;<SOURCE = WIKT|USER>

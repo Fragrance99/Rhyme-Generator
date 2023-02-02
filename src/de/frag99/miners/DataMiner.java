@@ -18,6 +18,7 @@ import javax.xml.stream.XMLStreamException;
 
 import org.xml.sax.SAXException;
 
+import de.frag99.machine.DoubleRhyme;
 import de.frag99.tokenizer.Tokenizer;
 import de.frag99.words.Symbol;
 import de.frag99.words.Vowel;
@@ -30,11 +31,8 @@ import de.frag99.xml.WordsHandlerFind;
 import de.frag99.xml.WordsHandlerVowel;
 
 public class DataMiner {
-
-	private static final String resourcePathREAD = "/de/frag99/resources/DE_WORDS.xml";
-
-	private static final String wordsPathREAD = "G:/XML DUMP/out.txt";
-	private static final String newXMLfilePARSE = "G:/XML DUMP/newData.xml"; // FOR PARSING
+	private static final String wordsPathREAD = "G:/XML DUMP/outEN.txt";
+	private static final String newXMLfilePARSE = "G:/XML DUMP/newDataEN.xml"; // FOR PARSING
 
 	private static final String wiktionaryDatabaseREAD = "G:/XML DUMP/enwiktionary-latest-pages-articles.xml"; // FOR
 																												// PARSING
@@ -56,7 +54,9 @@ public class DataMiner {
 		WordsHandlerVowel whv = new WordsHandlerVowel();
 		whv.setInputWord(vowelWord);
 
-		InputStream is = DataMiner.class.getResourceAsStream(resourcePathREAD);
+		
+		
+		InputStream is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(DoubleRhyme.lang));
 
 		try {
 			saxParser.parse(is, whv);
@@ -74,14 +74,31 @@ public class DataMiner {
 		WordsHandlerFind whf = new WordsHandlerFind();
 		whf.setInputWord(inputWord);
 
-		InputStream is = DataMiner.class.getResourceAsStream(resourcePathREAD);
+		InputStream is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(DoubleRhyme.lang));
 
 		try {
 			saxParser.parse(is, whf);
 		} catch (SaxTerminationException e) {
-
 		}
-
+		
+		if(whf.getFoundWord() == null) {
+			
+			for(String key : PathOrganizer.getResourcePaths().keySet()) {
+				
+				if(!key.equals(DoubleRhyme.lang)) {
+					
+					is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(key));
+					try {
+						saxParser.parse(is, whf);
+					} catch (SaxTerminationException e) {
+					}
+					if(whf.getFoundWord() != null) {
+						break;
+					}
+				}
+				
+			}
+		}
 		return whf.getFoundWord();
 
 	}
@@ -101,7 +118,7 @@ public class DataMiner {
 		
 		
 
-		InputStream is = DataMiner.class.getResourceAsStream(resourcePathREAD);
+		InputStream is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(DoubleRhyme.lang));
 		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 		SAXParser saxParser = saxParserFactory.newSAXParser();
 
@@ -110,7 +127,7 @@ public class DataMiner {
 			WordsHandlerClassic whc = new WordsHandlerClassic();
 			whc.setlastSyllable(lastSyll);
 
-			is = DataMiner.class.getResourceAsStream(resourcePathREAD);
+			is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(DoubleRhyme.lang));
 
 			try {
 				saxParser.parse(is, whc);
@@ -144,7 +161,7 @@ public class DataMiner {
 		Word symbolWord = tokenizer.tokenize();
 		whd.setInputWord(symbolWord);
 
-		InputStream is = DataMiner.class.getResourceAsStream(resourcePathREAD);
+		InputStream is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(DoubleRhyme.lang));
 
 		try {
 			saxParser.parse(is, whd);
@@ -185,17 +202,19 @@ public class DataMiner {
 
 					String wordRaw = data.get(0);
 					String ipaNotation = data.get(1);
-
+					
 					Tokenizer tempT = new Tokenizer(ipaNotation);
 					Word tempW = new Word();
 					tempW = tempT.tokenize();
-
+					
 					// System.out.println(wordRaw); //TODO
 
 					// tempW ist gelesenes Wort was zum vergleichen benötigt wird, um zu kopieren
 					// aber Variable line benutzen
 					if (tempW.getNoOfVowels() > 0) {
+						
 						doc.categorize(tempW, wordRaw, ipaNotation);
+						
 					} else {
 						// werden nichtbeachtet
 

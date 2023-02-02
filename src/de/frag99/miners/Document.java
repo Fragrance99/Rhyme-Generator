@@ -13,6 +13,7 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+import de.frag99.machine.DoubleRhyme;
 import de.frag99.words.Word;
 
 	
@@ -57,7 +58,12 @@ public class Document {
 		
 		out.writeStartDocument();
 		out.writeCharacters(System.lineSeparator());
-		out.writeStartElement("DE_WORDS");
+		if(DoubleRhyme.lang.equals("deutsch")) {
+			out.writeStartElement("DE_WORDS");
+		}else if(DoubleRhyme.lang.equals("english")) {
+			out.writeStartElement("EN_WORDS");
+		}
+		
 		
 		int vowelCount = 1;
 		while(!allPrinted()) {
