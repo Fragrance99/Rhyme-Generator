@@ -5,8 +5,7 @@ import de.frag99.tokenizer.Token;
 public class Vowel extends Symbol{
 
 	//gives the syllable position
-	
-	private RhymeClass rhymeClass;
+
 	private boolean isAcc;
 	
 	
@@ -17,12 +16,16 @@ public class Vowel extends Symbol{
 	}
 	
 	public boolean rhymesWith(Symbol v) {
-		//now: check if symbols are identical, later: check if in same RhymeClass
 		//Maybe: check for accentation, reason not to: words with only one syllable are by default accentuated
-		if(this.origToken == v.getOrigToken()) {
-			return true;
+		if(this.getOrigToken().getRhymeClas() == RhymeClass.OTHER) {
+			return this.isEqualTo(v);
 		}
-		return false;
+		return this.getOrigToken().getRhymeClas() == v.getOrigToken().getRhymeClas();
+	}
+	
+	public boolean isEqualTo(Symbol v) {
+		//Maybe: check for accentation, reason not to: words with only one syllable are by default accentuated
+		return this.origToken == v.getOrigToken();
 	}
 	
 	public boolean isAccentuated() {

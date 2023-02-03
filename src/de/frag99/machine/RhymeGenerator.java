@@ -207,8 +207,8 @@ public class RhymeGenerator {
 					if (w2 != null) {
 						System.out.println(w1);
 						System.out.println(w2);
-						System.out.println(w1.vowelRhymesWith(w2));
-						System.out.println(w1.classicRhymesWith(w2));
+						System.out.println(w1.hasSameVowelsAs(w2));
+						System.out.println(w1.hasSameLastRelSyllAs(w2));
 
 						for (Symbol s : w1.getLastRelevantSyll()) {
 							System.out.println(s.symb);

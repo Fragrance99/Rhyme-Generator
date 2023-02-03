@@ -54,8 +54,6 @@ public class DataMiner {
 		WordsHandlerVowel whv = new WordsHandlerVowel();
 		whv.setInputWord(vowelWord);
 
-		
-		
 		InputStream is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(RhymeGenerator.lang));
 
 		try {
@@ -281,7 +279,7 @@ public class DataMiner {
 				Word tempW = new Word();
 				tempW = tempT.tokenize();
 
-				if (w.vowelRhymesWith(tempW)) {
+				if (w.hasSameVowelsAs(tempW)) {
 
 					vowelRhymes.add(data.get(0));
 				}
@@ -315,7 +313,7 @@ public class DataMiner {
 
 				Word tempW = new Word();
 				tempW = tempT.tokenize();
-				if (w.classicRhymesWith(tempW)) {
+				if (w.hasSameLastRelSyllAs(tempW)) {
 					classicRhymes.add(data.get(0));
 				}
 
@@ -348,8 +346,8 @@ public class DataMiner {
 
 				Word tempW = new Word();
 				tempW = tempT.tokenize();
-				if (w.vowelRhymesWith(tempW)) {
-					if (w.classicRhymesWith(tempW)) {
+				if (w.hasSameVowelsAs(tempW)) {
+					if (w.hasSameLastRelSyllAs(tempW)) {
 						doubleRhymes.add(data.get(0));
 					}
 				}

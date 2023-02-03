@@ -34,16 +34,17 @@ public class ClassicRhymesClass {
 	
 	public void categorize(Word w, String fullWord, String ipaNotation) {
 		boolean found = false;
-		int index = 0;
-		while(found == false && index < words.size()) {
-			if(words.get(index).wordObject.equals(w)) {
-				found = true;
-				System.out.println("hi");
-			}
-			index++;
-		}
+		//TODO look into duplicate finding
+//		int index = 0;
+//		while(found == false && index < words.size()) {
+//			if(words.get(index).getIPANot().equals(w.getSymbolsAsString())) {
+//				found = true;
+//				System.out.println(fullWord + " already in database.");
+//			}
+//			index++;
+//		}
 		
-		if(found == false) {
+		if(!found) {
 			//kein duplikat
 			
 			words.add(new WordXML(w, fullWord, ipaNotation));

@@ -6,8 +6,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import de.frag99.words.Word;
-
 public class WordsHandlerClassic extends DefaultHandler{
 
 	//suche word aus allen words in liste, gib die vowelrhymeclass aus, in der gesuchtes word ist

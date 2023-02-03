@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-import de.frag99.tokenizer.Token;
 import de.frag99.tokenizer.TokenType;
 import de.frag99.words.Symbol;
 import de.frag99.words.Vowel;
@@ -42,7 +41,7 @@ public class VowelRhymesClass {
 		boolean categorized = false;
 		int index = 0;
 		while(categorized==false && index<classicRhymeClasses.size()) {
-			if(classicRhymeClasses.get(index).getExampleWord().classicRhymesWith(w)) {
+			if(classicRhymeClasses.get(index).getExampleWord().hasSameLastRelSyllAs(w)) {
 				//richtige klasse -> weiter einordnen
 				classicRhymeClasses.get(index).categorize(w, fullWord, ipaNotation);
 				

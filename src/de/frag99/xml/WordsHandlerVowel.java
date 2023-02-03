@@ -72,10 +72,16 @@ public class WordsHandlerVowel extends DefaultHandler{
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		if(inCorrectVowRhy) {
 			if(qName.equals("VowRhy")) {
-				throw new SaxTerminationException();
+				inCorrectVowRhy = false;
 			}
 		}
 		
+		if(inCorrectVowCount) {
+			if(qName.equals("VowCount")) {
+				
+				throw new SaxTerminationException();
+			}
+		}
 
 	}
 

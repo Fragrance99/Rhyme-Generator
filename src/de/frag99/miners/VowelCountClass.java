@@ -25,7 +25,7 @@ public class VowelCountClass {
 		int index = 0;
 		while(categorized==false && index<vowelRhymeClasses.size()) {
 			
-			if(vowelRhymeClasses.get(index).getExampleWord().vowelRhymesWith(w)) {
+			if(vowelRhymeClasses.get(index).getExampleWord().hasSameVowelsAs(w)) {
 				//richtige klasse -> weiter einordnen
 				
 				vowelRhymeClasses.get(index).categorize(w, fullWord, ipaNotation);

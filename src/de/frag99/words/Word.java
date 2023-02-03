@@ -72,13 +72,13 @@ public class Word {
 		ArrayList<Vowel> vowels1 = new ArrayList<>();
 		ArrayList<Vowel> vowels2 = new ArrayList<>();
 		for(Symbol s : symbols) {
-			if(s instanceof Vowel) {
+			if(s.getOrigToken().getTokenType() == TokenType.VOWEL) {
 				vowels1.add((Vowel) s);
 			}
 		}
 		
 		for(Symbol s : w2.getSymbols()) {
-			if(s instanceof Vowel) {
+			if(s.getOrigToken().getTokenType() == TokenType.VOWEL) {
 				vowels2.add((Vowel) s);
 			}
 		}
@@ -97,9 +97,39 @@ public class Word {
 		}else {
 			return false;
 		}
-			
 		
+		return true;
+	}
+	
+	public boolean hasSameVowelsAs(Word w2) {
+		ArrayList<Vowel> vowels1 = new ArrayList<>();
+		ArrayList<Vowel> vowels2 = new ArrayList<>();
+		for(Symbol s : symbols) {
+			if(s instanceof Vowel) {
+				vowels1.add((Vowel) s);
+			}
+		}
 		
+		for(Symbol s : w2.getSymbols()) {
+			if(s instanceof Vowel) {
+				vowels2.add((Vowel) s);
+			}
+		}
+		
+		//check if vowels have identical values
+		if(!vowels1.isEmpty()) {
+			if(vowels1.size() == vowels2.size()) {
+				for(int i = 0; i<vowels1.size(); i++) {
+					if(!vowels1.get(i).isEqualTo(vowels2.get(i))) {
+						return false;
+					}
+				}
+			}else {
+				return false;
+			}
+		}else {
+			return false;
+		}
 		
 		return true;
 		//for w1 to rhym with w2
@@ -149,7 +179,7 @@ public class Word {
 		return -1;
 	}
 	
-	public boolean classicRhymesWith(Word w2) {
+	public boolean hasSameLastRelSyllAs(Word w2) {
 		
 		ArrayList<Symbol> lastSyllable1 = this.getLastRelevantSyll();
 //		for(Symbol s : lastSyllable1) {
@@ -164,7 +194,7 @@ public class Word {
 			if(lastSyllable1.size() == lastSyllable2.size()) {
 				
 				for(int i = 0; i<lastSyllable1.size(); i++) {
-					if(!(lastSyllable1.get(i).rhymesWith(lastSyllable2.get(i)))) {
+					if(!(lastSyllable1.get(i).isEqualTo(lastSyllable2.get(i)))) {
 						//TODO 					
 						return false;
 					}
@@ -210,6 +240,14 @@ public class Word {
 	
 	public boolean isEmpty() {
 		return symbols.isEmpty();
+	}
+	
+	public String getSymbolsAsString() {
+		StringBuilder sb = new StringBuilder();
+		for(Symbol s : symbols) {
+			sb.append(s.getSymb());
+		}
+		return sb.toString();
 	}
 	
 }

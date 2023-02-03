@@ -15,10 +15,14 @@ public class Symbol {
 	}
 	
 	public boolean rhymesWith(Symbol s) {
-		if(this.symb.equals(s.symb)) {
+		//suggestion: add rhyme classes for consonants
+		return this.getSymb().equals(s.getSymb());
+	}
+	
+	public boolean isEqualTo(Symbol s) {
+		if(this.getSymb().equals(s.getSymb())) {
 			return true;
 		}
-		
 		return false;
 	}
 
