@@ -34,8 +34,7 @@ public class DataMiner {
 	private static final String wordsPathREAD = "G:/XML DUMP/outFR.txt";
 	private static final String newXMLfilePARSE = "G:/XML DUMP/newDataFR.xml"; // FOR PARSING
 
-	private static final String wiktionaryDatabaseREAD = "G:/XML DUMP/frwiktionary-latest-pages-articles.xml"; // FOR
-																												// PARSING
+	private static final String wiktionaryDatabaseREAD = "G:/XML DUMP/frwiktionary-latest-pages-articles.xml"; // FOR PARSING
 
 	public static ArrayList<String> getVowelRhymesTo(List<Vowel> allVowelSymbols)
 			throws ParserConfigurationException, SAXException, IOException {

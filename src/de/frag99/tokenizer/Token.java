@@ -64,7 +64,7 @@ public enum Token {
 	VOWEL_EH ("ɘ", TokenType.VOWEL), 
 	VOWEL_AE ("ɛ", TokenType.VOWEL, 				RhymeClass.VOWEL_E), //es, Camp
 	VOWEL_AEOEH ("ɜ", TokenType.VOWEL, 				RhymeClass.VOWEL_OE), //bird(british)
-	VOWEL_AO ("ɒ", TokenType.VOWEL),
+	VOWEL_AO ("ɒ", TokenType.VOWEL, 				RhymeClass.VOWEL_A),
 	VOWEL_AEOEH_DUPLICATE ("ɝ", TokenType.VOWEL),
 	VOWEL_AE_DUPLICATE ("æ", TokenType.VOWEL, 		RhymeClass.VOWEL_AE), //smash
 	VOWEL_AE_SHORT ("ə", TokenType.VOWEL, 			RhymeClass.VOWEL_AE), //Alle(2)

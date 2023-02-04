@@ -76,7 +76,7 @@ public class RhymeGenerator {
 						
 						if (!wholeLine.isEmpty()) {
 
-							mainframe.addNotification("Reime auf: " + lineInput.toString());
+							mainframe.addNotification("Rhymes to:  " + lineInput.toString());
 
 							// hier mit wholeLine weiterarbeiten
 							ArrayList<String> results = new ArrayList<>();
