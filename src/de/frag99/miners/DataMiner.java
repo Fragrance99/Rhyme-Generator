@@ -62,6 +62,7 @@ public class DataMiner {
 			// parsing ended
 		}
 		// System.out.println(whv.getAllWords().size());
+		is.close();
 		return whv.getAllWords();
 
 	}
@@ -97,6 +98,7 @@ public class DataMiner {
 				
 			}
 		}
+		is.close();
 		return whf.getFoundWord();
 
 	}
@@ -134,7 +136,7 @@ public class DataMiner {
 			
 
 		}
-		
+		is.close();
 		return res;
 	}
 
@@ -162,7 +164,7 @@ public class DataMiner {
 		} catch (SaxTerminationException e) {
 			// parsing ended
 		}
-
+		is.close();
 		return whd.getAllWords();
 	}
 
