@@ -13,7 +13,7 @@ public enum RhymeClass {
 	VOWEL_UE, // yː , y
 	VOWEL_OE, // øː , œː , ø , ɜ
 	VOWEL_AE, // æ , ə ,  
-	VOWEL_EY, // ɛɪ̯ , eɪ
+	VOWEL_EY, // ɛɪ̯ , eɪ , ɔʏ
 	VOWEL_EU, // eu , ɔɪ̯ , ɔɪ , oɪ
 	VOWEL_ONS, // ɑ̃ː , ɑ̃ , ɔː , ɔ̃ː , ɔ̃ , õ
 	VOWEL_AU, // aʊ , aʊ̯

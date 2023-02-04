@@ -194,15 +194,19 @@ public class RhymeGenerator {
 
 				Tokenizer t = new Tokenizer("naɪ̯t");
 				
-				Word w1 = DataMiner.findIPAto("Apfelkraut");
+				Word w1 = DataMiner.getIPAto("idempotent");
 				
-				Word w3 = DataMiner.getIPAto("Eisen");
-				
+				Word w3 = DataMiner.getIPAto("deine");
+				Word w4 = DataMiner.getIPAto("Oma");
+				w3.append(w4);
+				System.out.println(w3);
 				Tokenizer t2 = new Tokenizer("bəˈʁaɪ̯t");
 				Word w2 = t2.tokenize();
 				
 				ArrayList<String> res = DataMiner.findClassicRhymesTo(w1);
 				System.out.println(res.toString());
+				
+				System.out.println("r: " + w3.vowelRhymesWith(w1));
 				if (w1 != null) {
 					if (w2 != null) {
 						System.out.println(w1);

@@ -14,7 +14,8 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class PageHandler extends DefaultHandler{
 
-	private final String outputFile = "G:\\XML DUMP\\outEN.txt";
+	private static final String outputFile = "G:\\XML DUMP\\outFR.txt";
+	
 	private String currWord;
 	private boolean isInTitle = false;
 	private boolean isInText = false;
@@ -44,8 +45,7 @@ public class PageHandler extends DefaultHandler{
 		
 	}
 
-	
-	//for english wiktionary databse
+	//for french wiktionary databse
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		if(qName.equals("title")) {
@@ -56,14 +56,16 @@ public class PageHandler extends DefaultHandler{
 			isInText = false;
 			
 			//{{Sprache|Deutsch}} {{Lautschrift|<iwas>}}
-			if(content.toString().contains("==English==")) {
-				
+			if(content.toString().contains("== {{langue|fr}} ==")) {
+				System.out.println(currWord);
 				if(!(currWord.charAt(0) == '-') //sprichwort
 						&& !(currWord.charAt(currWord.length()-1) == '’')) { //genitiv
-					Pattern pattern = Pattern.compile("\\{\\{IPA\\|en\\|\\/(.*?)\\/");
+					Pattern pattern = Pattern.compile("\\{\\{pron\\|(.*?)\\|");
 					Matcher matcher = pattern.matcher(content);
 						if(matcher.find()) {
+							
 							if(!matcher.group(1).isBlank()
+									
 									//Ausnahmen wegen inkonsistenter Datenaufteilung
 									&& !matcher.group(1).contains("…") //ipa nicht vorhanden
 									&& !matcher.group(1).contains("=") //ipa nicht vorhanden
@@ -72,8 +74,6 @@ public class PageHandler extends DefaultHandler{
 									&& !matcher.group(1).contains(";") //ipa nicht vorhanden
 									&& !matcher.group(1).contains("—") //ipa nicht vorhanden
 									/* && !matcher.group(1).contains(" ")*/ )  { //ipa enthält leerzeichen
-								
-								
 								
 								if(!currWord.contains(":")) {
 									//DEBUG System.out.println(currWord+";"+matcher.group(1));
@@ -95,6 +95,57 @@ public class PageHandler extends DefaultHandler{
 			content.setLength(0);
 		}
 	}
+	
+//	//for english wiktionary databse
+//	@Override
+//	public void endElement(String uri, String localName, String qName) throws SAXException {
+//		if(qName.equals("title")) {
+//			isInTitle = false;
+//		}
+//		
+//		if(qName.equals("text")) {
+//			isInText = false;
+//			
+//			//{{Sprache|Deutsch}} {{Lautschrift|<iwas>}}
+//			if(content.toString().contains("==English==")) {
+//				
+//				if(!(currWord.charAt(0) == '-') //sprichwort
+//						&& !(currWord.charAt(currWord.length()-1) == '’')) { //genitiv
+//					Pattern pattern = Pattern.compile("\\{\\{IPA\\|en\\|\\/(.*?)\\/");
+//					Matcher matcher = pattern.matcher(content);
+//						if(matcher.find()) {
+//							if(!matcher.group(1).isBlank()
+//									//Ausnahmen wegen inkonsistenter Datenaufteilung
+//									&& !matcher.group(1).contains("…") //ipa nicht vorhanden
+//									&& !matcher.group(1).contains("=") //ipa nicht vorhanden
+//									&& !matcher.group(1).contains("...") //ipa nicht vorhanden
+//									/*&& !matcher.group(1).contains("/") //ipa nicht vorhanden */
+//									&& !matcher.group(1).contains(";") //ipa nicht vorhanden
+//									&& !matcher.group(1).contains("—") //ipa nicht vorhanden
+//									/* && !matcher.group(1).contains(" ")*/ )  { //ipa enthält leerzeichen
+//								
+//								
+//								
+//								if(!currWord.contains(":")) {
+//									//DEBUG System.out.println(currWord+";"+matcher.group(1));
+//									//<WORT>;<LAUTSCHRIFT>;<SOURCE = WIKT|USER>
+//									
+//									addLineTo(currWord+";"+matcher.group(1)+
+//											/* ";"+"WIKT"+ */
+//											System.lineSeparator() ,outputFile);
+//								}
+//								
+//							}
+//							
+//							
+//						}
+//				}
+//				
+//				
+//			}
+//			content.setLength(0);
+//		}
+//	}
 
 //	for german wiktionary databse 
 //	public void endElement(String uri, String localName, String qName) throws SAXException {

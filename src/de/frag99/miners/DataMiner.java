@@ -31,10 +31,10 @@ import de.frag99.xml.WordsHandlerFind;
 import de.frag99.xml.WordsHandlerVowel;
 
 public class DataMiner {
-	private static final String wordsPathREAD = "G:/XML DUMP/outEN.txt";
-	private static final String newXMLfilePARSE = "G:/XML DUMP/newDataEN.xml"; // FOR PARSING
+	private static final String wordsPathREAD = "G:/XML DUMP/outFR.txt";
+	private static final String newXMLfilePARSE = "G:/XML DUMP/newDataFR.xml"; // FOR PARSING
 
-	private static final String wiktionaryDatabaseREAD = "G:/XML DUMP/enwiktionary-latest-pages-articles.xml"; // FOR
+	private static final String wiktionaryDatabaseREAD = "G:/XML DUMP/frwiktionary-latest-pages-articles.xml"; // FOR
 																												// PARSING
 
 	public static ArrayList<String> getVowelRhymesTo(List<Vowel> allVowelSymbols)
@@ -54,7 +54,7 @@ public class DataMiner {
 		WordsHandlerVowel whv = new WordsHandlerVowel();
 		whv.setInputWord(vowelWord);
 
-		InputStream is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(RhymeGenerator.lang));
+		InputStream is = PathOrganizer.getStreamTo(RhymeGenerator.lang);
 
 		try {
 			saxParser.parse(is, whv);
@@ -72,7 +72,7 @@ public class DataMiner {
 		WordsHandlerFind whf = new WordsHandlerFind();
 		whf.setInputWord(inputWord);
 
-		InputStream is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(RhymeGenerator.lang));
+		InputStream is = PathOrganizer.getStreamTo(RhymeGenerator.lang);
 
 		try {
 			saxParser.parse(is, whf);
@@ -85,7 +85,7 @@ public class DataMiner {
 				
 				if(!key.equals(RhymeGenerator.lang)) {
 					
-					is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(key));
+					is = PathOrganizer.getStreamTo(key);
 					try {
 						saxParser.parse(is, whf);
 					} catch (SaxTerminationException e) {
@@ -113,10 +113,8 @@ public class DataMiner {
 		}
 
 		String lastSyll = sb.toString();
-		
-		
 
-		InputStream is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(RhymeGenerator.lang));
+		InputStream is = PathOrganizer.getStreamTo(RhymeGenerator.lang);
 		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 		SAXParser saxParser = saxParserFactory.newSAXParser();
 
@@ -124,8 +122,6 @@ public class DataMiner {
 
 			WordsHandlerClassic whc = new WordsHandlerClassic();
 			whc.setlastSyllable(lastSyll);
-
-			is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(RhymeGenerator.lang));
 
 			try {
 				saxParser.parse(is, whc);
@@ -159,7 +155,7 @@ public class DataMiner {
 		Word symbolWord = tokenizer.tokenize();
 		whd.setInputWord(symbolWord);
 
-		InputStream is = DataMiner.class.getResourceAsStream(PathOrganizer.getPathTo(RhymeGenerator.lang));
+		InputStream is = PathOrganizer.getStreamTo(RhymeGenerator.lang);
 
 		try {
 			saxParser.parse(is, whd);
@@ -232,8 +228,17 @@ public class DataMiner {
 		// also rhymes with itself
 	}
 
+	public static void parseXML() throws ParserConfigurationException, SAXException, IOException {
+
+		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+		SAXParser saxParser = saxParserFactory.newSAXParser();
+		saxParser.parse(wiktionaryDatabaseREAD, new PageHandler());
+
+	}
+	
 	// old methods for the <word>;<ipa>... notation txt file
 	public static Word findIPAto(String rawWord) {
+
 		// normales Wort rein
 		Word word = new Word();
 		// <normales Wort>,<Wort in Lautschrift>,... e.g. user vorgeschlagen
@@ -258,7 +263,8 @@ public class DataMiner {
 		}
 		return word;
 	}
-
+	
+	
 	public static ArrayList<String> findVowelRhymesTo(Word w) {
 		ArrayList<String> vowelRhymes = new ArrayList<>();
 
@@ -361,12 +367,6 @@ public class DataMiner {
 		return doubleRhymes;
 	}
 
-	public static void parseXML() throws ParserConfigurationException, SAXException, IOException {
 
-		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
-		SAXParser saxParser = saxParserFactory.newSAXParser();
-		saxParser.parse(wiktionaryDatabaseREAD, new PageHandler());
-
-	}
 
 }

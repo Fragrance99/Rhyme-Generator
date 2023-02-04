@@ -26,6 +26,7 @@ public enum Token {
 	VOWEL_EU_DUPLICATE3 ("oɪ", TokenType.VOWEL, 	RhymeClass.VOWEL_EU),
 	VOWEL_EU_DUPLICATE ("eu", TokenType.VOWEL, 		RhymeClass.VOWEL_EU),
 	VOWEL_EU_DUPLICATE2 ("ɔɪ", TokenType.VOWEL, 	RhymeClass.VOWEL_EU),
+	VOWEL_EU_DUPLICATE4 ("ɔʏ", TokenType.VOWEL, 	RhymeClass.VOWEL_EU),
 	VOWEL_EY_DUPLICATE ("eɪ", TokenType.VOWEL, 		RhymeClass.VOWEL_EY),
 	VOWEL_EY_DUPLICATE2 ("ei", TokenType.VOWEL, 	RhymeClass.VOWEL_EY),
 	VOWEL_AU_DUPLICATE ("aʊ", TokenType.VOWEL, 		RhymeClass.VOWEL_AU),

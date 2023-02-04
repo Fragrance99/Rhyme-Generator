@@ -29,7 +29,7 @@ public class RadioButtonPanel extends JPanel{
 		rhType.add(doubleRh);
 		rhType.add(vowelRh);
 		rhType.add(classicRh);
-		rhType.setSelected(doubleRh.getModel(), true);
+		rhType.setSelected(vowelRh.getModel(), true);
 		
 		this.add(doubleRh);
 		this.add(vowelRh);
