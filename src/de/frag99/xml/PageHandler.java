@@ -20,7 +20,6 @@ public class PageHandler extends DefaultHandler{
 	private boolean isInTitle = false;
 	private boolean isInText = false;
 	private StringBuilder content = new StringBuilder();
-	private int debug = 0;
 	
 	@Override
 	public void startDocument() throws SAXException {

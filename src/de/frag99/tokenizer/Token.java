@@ -30,11 +30,11 @@ public enum Token {
 	VOWEL_EY_DUPLICATE ("eɪ", TokenType.VOWEL, 		RhymeClass.VOWEL_EY),
 	VOWEL_EY_DUPLICATE2 ("ei", TokenType.VOWEL, 	RhymeClass.VOWEL_EY),
 	VOWEL_AU_DUPLICATE ("aʊ", TokenType.VOWEL, 		RhymeClass.VOWEL_AU),
-	VOWEL_A_LONG ("aː", TokenType.VOWEL, 			RhymeClass.VOWEL_A), //haben(1), Staat
+	VOWEL_A_LONG ("aː", TokenType.VOWEL), //haben(1), Staat
 	VOWEL_ER_SHORT ("ɐ̯", TokenType.VOWEL), //der, über(2)
 	VOWEL_ONS ("ɑ̃", TokenType.VOWEL, 				RhymeClass.VOWEL_ONS), //Engagement(1)
 	VOWEL_E_LONG ("eː", TokenType.VOWEL, 			RhymeClass.VOWEL_E), //Idee(2)
-	VOWEL_AE_LONG ("ɛː", TokenType.VOWEL), //Fan, Dessert(2)
+	VOWEL_AE_LONG ("ɛː", TokenType.VOWEL, RhymeClass.VOWEL_E), //Fan, Dessert(2)
 	VOWEL_OMB ("ɛ̃", TokenType.VOWEL), //timbrieren(1)
 	VOWEL_IE ("iː", TokenType.VOWEL, 				RhymeClass.VOWEL_I), //die, Keyboard(1)
 	VOWEL_I_SHORT ("i̯", TokenType.VOWEL), //Million(2)
@@ -62,7 +62,7 @@ public enum Token {
 	VOWEL_ER ("ɐ", TokenType.VOWEL, 				RhymeClass.VOWEL_A), //über
 	VOWEL_E ("e", TokenType.VOWEL, 					RhymeClass.VOWEL_E), //jedoch(1)
 	VOWEL_EH ("ɘ", TokenType.VOWEL), 
-	VOWEL_AE ("ɛ", TokenType.VOWEL, 				RhymeClass.VOWEL_E), //es, Camp
+	VOWEL_AE ("ɛ", TokenType.VOWEL), //es, Camp
 	VOWEL_AEOEH ("ɜ", TokenType.VOWEL, 				RhymeClass.VOWEL_OE), //bird(british)
 	VOWEL_AO ("ɒ", TokenType.VOWEL, 				RhymeClass.VOWEL_A),
 	VOWEL_AEOEH_DUPLICATE ("ɝ", TokenType.VOWEL),

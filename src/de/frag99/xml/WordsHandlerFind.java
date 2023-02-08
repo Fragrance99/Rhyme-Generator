@@ -9,7 +9,6 @@ import de.frag99.words.Word;
 
 public class WordsHandlerFind extends DefaultHandler{
 
-	private static final int charLimit = 10;
 	private Word foundWord;
 	private String inputWord;
 	

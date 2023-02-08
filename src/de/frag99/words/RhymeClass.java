@@ -4,8 +4,8 @@ public enum RhymeClass {
 
 	//Vowels that are similiar to each other
 	
-	VOWEL_A, // aː , a , ɐ , ɚ , ʌ , ɒ
-	VOWEL_E, // eː , e , ɛ
+	VOWEL_A, // a , ɐ , ɚ , ʌ , ɒ
+	VOWEL_E, // eː , e , ɛː
 	VOWEL_I, // i , iː
 	VOWEL_O, // oː , o 
 	VOWEL_U, // uː , u
